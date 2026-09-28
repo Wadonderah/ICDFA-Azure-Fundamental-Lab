@@ -1,3 +1,6 @@
+<div align="center">  
+    
+
 # Azure Static Website Hosting
 
 > Deployment, validation, update, and responsible cleanup of a static website hosted with Microsoft Azure Storage.
@@ -11,7 +14,10 @@
 | **Specialization** | Cloud Security Engineering |
 | **Project** | Azure Static Website Hosting |
 | **Project Status** | Completed |
-| **Environment** | Microsoft Azure educational lab |
+| **Environment** | Microsoft Azure educational lab |  
+
+</div>
+
 
 ---
 
