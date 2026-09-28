@@ -1,6 +1,6 @@
 # Azure Static Website Hosting
 
-> Deployment, validation, update, and resource cleanup of a static website hosted using Microsoft Azure Storage.
+> Deployment, validation, update, and responsible cleanup of a static website hosted with Microsoft Azure Storage.
 
 ## Project Information
 
@@ -17,51 +17,52 @@
 
 ## 1. Project Overview
 
-This project demonstrates the complete lifecycle of deploying a static website through Microsoft Azure Storage. It covers cloud resource provisioning, storage account configuration, static website hosting, HTML file deployment, endpoint testing, website updating, blob property verification, and resource cleanup.
+This project demonstrates the complete lifecycle of deploying a static website through Microsoft Azure Storage. It covers resource provisioning, storage account configuration, static website hosting, HTML file deployment, endpoint testing, website updating, blob property verification, and resource cleanup.
 
-The solution used an Azure Storage Account to host an `index.html` landing page and a custom `404.html` error page in the automatically created `$web` container. The website was initially validated as Version 1 and later updated to display **Version 2 - Landing Page**.
+The solution used an Azure Storage Account to host an `index.html` landing page and a custom `404.html` error page in the automatically created `$web` container. The website was first validated as Version 1 and later updated to display **Version 2 - Landing Page**.
 
 ---
 
 ## 2. Executive Summary
 
-The project was completed successfully using Microsoft Azure Portal and Azure Blob Storage. A resource group and storage account were created, after which static website hosting was enabled with `index.html` configured as the index document and `404.html` configured as the custom error document.
+The project was completed successfully through the Microsoft Azure portal and Azure Blob Storage. A resource group and storage account were created, after which static website hosting was enabled. The `index.html` file was configured as the index document, while `404.html` was configured as the custom error document.
 
-Both files were uploaded to the `$web` container and tested through the generated public website endpoint. The main endpoint loaded the landing page, while a nonexistent route displayed the custom 404 page. The landing page was subsequently updated from Version 1 to Version 2 and validated through the public endpoint.
+Both files were uploaded to the `$web` container and tested through the generated public website endpoint. The primary endpoint displayed the landing page, while a nonexistent route displayed the custom 404 page. The landing page was then updated from Version 1 to Version 2 and validated through the public endpoint.
 
-The blob properties were reviewed, confirming a `text/html` content type and the Hot access tier. After validation, the resource group was deleted to complete the cloud resource lifecycle and prevent unused lab resources from remaining active.
+Blob properties were reviewed, confirming the `text/html` content type and Hot access tier. After validation, the resource group was deleted to complete the cloud resource lifecycle and prevent unused lab resources from remaining active.
 
 ---
 
 ## 3. Objectives
 
 - Create and configure an Azure resource group.
-- Create an Azure Storage Account using Standard performance and locally redundant storage.
+- Provision an Azure Storage Account using Standard performance and locally redundant storage.
 - Enable static website hosting in Azure Storage.
 - Configure `index.html` as the index document.
 - Configure `404.html` as the custom error document.
-- Upload website files to the `$web` container.
+- Upload the website files to the `$web` container.
 - Validate the public static website endpoint.
-- Test custom error page behavior using an invalid route.
+- Test custom error-page behavior using an invalid route.
 - Update the deployed landing page from Version 1 to Version 2.
 - Verify the content type and access tier of the uploaded blobs.
 - Remove the Azure resources after completing the lab.
+- Document the implementation with clear, sequential, and sanitized screenshot evidence.
 
 ---
 
 ## 4. Professional Value
 
-This project provides practical evidence of the ability to work with cloud-hosted web content and manage the lifecycle of Azure resources. It demonstrates experience in provisioning, configuring, validating, updating, and removing cloud infrastructure in a controlled lab environment.
+This project provides practical evidence of the ability to deploy cloud-hosted web content and manage the lifecycle of Azure resources. It demonstrates experience in provisioning, configuring, validating, updating, documenting, and removing cloud infrastructure in a controlled lab environment.
 
-From a professional perspective, the project shows:
+From a professional perspective, the project demonstrates:
 
-- An understanding of Azure resource organization.
+- Understanding of Azure resource organization.
 - Practical familiarity with Azure Storage services.
 - Awareness of website availability and error handling.
 - Attention to storage configuration and blob properties.
 - Recognition of cloud security responsibilities.
-- Awareness of cost control through resource cleanup.
-- The ability to document technical work in a structured and verifiable format.
+- Cost awareness through responsible resource cleanup.
+- Ability to document technical work in a structured and verifiable format.
 
 ---
 
@@ -97,10 +98,16 @@ From a professional perspective, the project shows:
 
 ### Security and Cost Awareness
 
-- Avoided documenting credentials, access keys, connection strings, or tokens.
-- Recognized the importance of least privilege access.
+- Avoided documenting credentials, access keys, connection strings, and tokens.
+- Recognized the importance of least-privilege access.
 - Removed unused lab resources to reduce the risk of unintended charges.
 - Distinguished an educational deployment from a production-ready architecture.
+
+### Technical Documentation
+
+- Organized evidence using sequential figure labels.
+- Connected each screenshot to a specific implementation or validation step.
+- Presented the work in a recruiter-friendly GitHub Markdown format.
 
 ---
 
@@ -112,12 +119,14 @@ From a professional perspective, the project shows:
 | **Azure Resource Group** | Logical organization of project resources |
 | **Azure Storage Account** | Hosting environment for the static website |
 | **Azure Blob Storage** | Storage of the website files |
-| **Azure Static Website Hosting** | Publication of the HTML website through a public endpoint |
+| **Azure Static Website Hosting** | Publication of HTML content through a public endpoint |
 | **HTML5** | Creation of the landing page and custom error page |
-| **Web Browser** | Testing the website endpoint and error page behavior |
+| **Web Browser** | Testing the website endpoint and error-page behavior |
 | **Local Text Editor** | Creation and modification of the HTML files |
+| **GitHub** | Repository hosting and project documentation |
+| **Markdown** | Formatting of the project report and screenshot evidence |
 
-> Tool and software versions not provided in the source report have not been estimated or invented.
+> Tool and software versions not provided in the source material have not been estimated or invented.
 
 ---
 
@@ -161,7 +170,7 @@ azure-static-website-hosting/
     └── Azure_Static_Website_Hosting_Report.docx
 ```
 
-> Rename each screenshot according to the evidence it contains and preserve the sequential naming format from `Fig01` to `Fig10`.
+> Place each screenshot inside the `screenshots` folder and preserve the sequential naming format from `Fig01` to `Fig10`.
 
 ---
 
@@ -169,103 +178,89 @@ azure-static-website-hosting/
 
 ### Step 1: Provision the Azure Resource Group
 
-The project began by creating the `rg-gp-static-website` resource group. This provided a logical container for the storage resources used during the lab.
+The project began by creating the `rg-gp-static-website` resource group. This provided a logical container for the Azure resources used during the lab.
 
-**Screenshot:** `Fig01 resource-group-created.png`
+<img width="666" height="559" alt="Fig01 resource-group-created" src="https://github.com/user-attachments/assets/c8fe5fde-ce84-4150-b29a-9693578d1d69" />
 
-```markdown
-"C:\Users\wadon\OneDrive\Pictures\Screenshots\linux-week2\Fig01 resource-group-created.png"
-```
+
+*Fig01: Successful creation of the Azure resource group.*
 
 ### Step 2: Create the Storage Account
 
 The storage account `stgpstaticsite65475541` was created using Standard performance and locally redundant storage.
 
-**Screenshot:** `Fig02 storage-account-created.png`
+<img width="1087" height="607" alt="Fig02 storage-account-created" src="https://github.com/user-attachments/assets/940a12c3-50b8-45c4-8632-abeb491dce00" />
 
-```markdown
-![Fig02 Storage account created](screenshots/Fig02%20storage-account-created.png)
-```
+
+*Fig02: Successful creation of the Azure Storage Account using the selected configuration.*
 
 ### Step 3: Enable Static Website Hosting
 
-Static website hosting was enabled on the storage account. The index document was configured as `index.html`, while the error document was configured as `404.html`.
+Static website hosting was enabled on the storage account. The index document was configured as `index.html`, while the custom error document was configured as `404.html`.
 
-**Screenshot:** `Fig03 static-website-enabled.png`
+<img width="1086" height="375" alt="Fig03 static-website-enabled" src="https://github.com/user-attachments/assets/80bb5f9d-9ece-4f11-8e96-826dcb22a88c" />
 
-```markdown
-![Fig03 Static website enabled](screenshots/Fig03%20static-website-enabled.png)
-```
 
-### Step 4: Upload Website Files
+*Fig03: Static website hosting enabled with the index and custom error documents configured.*
 
-The `index.html` and `404.html` files were uploaded to the `$web` container created for static website content.
+### Step 4: Upload the Website Files
 
-**Screenshot:** `Fig04 web-container-files.png`
+The `index.html` and `404.html` files were uploaded to the automatically created `$web` container.
 
-```markdown
-![Fig04 Web container files](screenshots/Fig04%20web-container-files.png)
-```
+<img width="1091" height="354" alt="Fig04 web-container-files" src="https://github.com/user-attachments/assets/c6626ad2-00cd-4a2b-8b06-9dbe3254fd0c" />
+
+
+*Fig04: The `index.html` and `404.html` files uploaded to the `$web` container.*
 
 ### Step 5: Validate the Version 1 Landing Page
 
-The public static website endpoint was opened in a browser to confirm that the original landing page loaded correctly.
+The public static website endpoint was opened in a web browser to confirm that the original landing page loaded correctly.
 
-**Screenshot:** `Fig05 version-one-landing-page.png`
+<img width="1088" height="299" alt="Fig05 version-one-landing-page" src="https://github.com/user-attachments/assets/338b90a7-c120-4444-a8dd-6ace9228acf0" />
 
-```markdown
-![Fig05 Version one landing page](screenshots/Fig05%20version-one-landing-page.png)
-```
+
+*Fig05: Successful validation of the Version 1 landing page through the public endpoint.*
 
 ### Step 6: Validate the Custom 404 Page
 
 A nonexistent website path was entered to test error handling. The configured custom 404 page was displayed successfully.
 
-**Screenshot:** `Fig06 custom-404-page.png`
+<img width="1087" height="295" alt="Fig06 custom-404-page" src="https://github.com/user-attachments/assets/0e270ce9-4ec0-4d01-9a68-519d85b43a5a" />
 
-```markdown
-![Fig06 Custom 404 page](screenshots/Fig06%20custom-404-page.png)
-```
+
+*Fig06: Successful validation of the custom 404 page using a nonexistent route.*
 
 ### Step 7: Update the Website
 
-The `index.html` file was revised from Version 1 to Version 2 and uploaded with overwrite enabled. After refreshing the public endpoint, the website displayed **Version 2 - Landing Page**.
+The `index.html` file was revised from Version 1 to Version 2 and uploaded with overwrite enabled. After the public endpoint was refreshed, the website displayed **Version 2 - Landing Page**.
 
-**Screenshot:** `Fig07 version-two-landing-page.png`
+![Fig07 Version 2 landing page](screenshots/Fig07%20version-two-landing-page.png)
 
-```markdown
-![Fig07 Version two landing page](screenshots/Fig07%20version-two-landing-page.png)
-```
+*Fig07: Successful publication and validation of the updated Version 2 landing page.*
 
 ### Step 8: Review the Index Blob Properties
 
-The properties of `index.html` were reviewed. The content type was `text/html` and the access tier was Hot.
+The properties of `index.html` were reviewed. The file had a `text/html` content type and used the Hot access tier.
 
-**Screenshot:** `Fig08 index-blob-properties.png`
-
-```markdown
 ![Fig08 Index blob properties](screenshots/Fig08%20index-blob-properties.png)
-```
+
+*Fig08: Blob properties of `index.html`, including its content type and access tier.*
 
 ### Step 9: Review the Error Blob Properties
 
-The properties of `404.html` were reviewed. The content type was `text/html` and the access tier was Hot.
+The properties of `404.html` were reviewed. The file had a `text/html` content type and used the Hot access tier.
 
-**Screenshot:** `Fig09 error-blob-properties.png`
-
-```markdown
 ![Fig09 Error blob properties](screenshots/Fig09%20error-blob-properties.png)
-```
+
+*Fig09: Blob properties of `404.html`, including its content type and access tier.*
 
 ### Step 10: Remove the Lab Resources
 
-After completing the required validation, the `rg-gp-static-website` resource group was deleted. The cleanup check confirmed that the resource group was no longer available and that the saved endpoint no longer resolved.
+After completing the required validation, the `rg-gp-static-website` resource group was deleted. The cleanup check confirmed that the resource group was no longer available and that the saved website endpoint no longer resolved.
 
-**Screenshot:** `Fig10 resource-cleanup-confirmation.png`
-
-```markdown
 ![Fig10 Resource cleanup confirmation](screenshots/Fig10%20resource-cleanup-confirmation.png)
-```
+
+*Fig10: Confirmation that the Azure lab resources were successfully removed.*
 
 ---
 
@@ -278,13 +273,13 @@ After completing the required validation, the `rg-gp-static-website` resource gr
 | `Fig03 static-website-enabled.png` | Static website configuration | Confirms that the index and error documents were assigned |
 | `Fig04 web-container-files.png` | File upload | Confirms the presence of `index.html` and `404.html` in the `$web` container |
 | `Fig05 version-one-landing-page.png` | Initial endpoint test | Demonstrates that the original landing page was publicly accessible |
-| `Fig06 custom-404-page.png` | Invalid route test | Confirms that the custom error document handled nonexistent paths |
+| `Fig06 custom-404-page.png` | Invalid-route test | Confirms that the custom error document handled nonexistent paths |
 | `Fig07 version-two-landing-page.png` | Website update test | Demonstrates successful replacement and publication of the revised index file |
 | `Fig08 index-blob-properties.png` | Index blob inspection | Provides evidence of the configured content type and access tier |
 | `Fig09 error-blob-properties.png` | Error blob inspection | Provides evidence of the configured content type and access tier |
 | `Fig10 resource-cleanup-confirmation.png` | Resource deletion | Demonstrates responsible cleanup of the educational lab environment |
 
-The documented results confirm that static website hosting was enabled, the required HTML files were stored in the `$web` container, the main endpoint and custom error page operated correctly, Version 2 was published successfully, and the resources were removed after validation.
+The documented results confirm that static website hosting was enabled, the required HTML files were stored in the `$web` container, the primary endpoint and custom error page operated correctly, Version 2 was published successfully, and the resources were removed after validation.
 
 ---
 
@@ -304,42 +299,71 @@ The documented results confirm that static website hosting was enabled, the requ
 ## 12. Security and Cost Considerations
 
 - Credentials, access keys, connection strings, and tokens must not be committed to a public GitHub repository.
-- Least privilege access should be used when managing Azure resources.
-- Sensitive Azure account information should be removed or obscured in screenshots before publication.
+- Least-privilege access should be used when managing Azure resources.
+- Subscription identifiers, tenant information, email addresses, and other sensitive data should be obscured in screenshots before publication.
 - Unused lab resources should be deleted to reduce the risk of unintended charges.
-- A production deployment would require further review of monitoring, logging, HTTPS, custom domains, and applicable organizational security requirements.
+- A production deployment would require further review of monitoring, logging, HTTPS, custom domains, identity, authorization, and organizational security requirements.
+- Repository history should be reviewed if sensitive material is committed accidentally, because deleting a file from the latest version alone may not remove it from earlier commits.
 
 ---
 
 ## 13. Limitations and Next Steps
 
-This project demonstrates a basic educational implementation and is not presented as a production-ready architecture. The source report does not specify the local operating system, browser version, text editor version, or Azure service/API version.
+This project demonstrates an educational implementation and is not presented as a production-ready architecture. The source material does not specify the local operating system, browser version, text editor version, or Azure service/API version.
 
 Potential future improvements include:
 
-- Connecting a custom domain.
-- Reviewing HTTPS and secure content delivery requirements.
-- Introducing deployment automation through a controlled CI/CD workflow.
-- Adding monitoring and logging.
-- Applying formal access control and least privilege policies.
-- Expanding the website with CSS and JavaScript.
-- Documenting a production-focused security review.
+- Connect a custom domain.
+- Review HTTPS and secure content-delivery requirements.
+- Introduce deployment automation through a controlled CI/CD workflow.
+- Add monitoring and logging.
+- Apply formal access-control and least-privilege policies.
+- Expand the website with CSS and JavaScript.
+- Add an architecture diagram to improve technical communication.
+- Include a deployment checklist and rollback procedure.
+- Evaluate Azure Static Web Apps when authentication, authorization, configurable headers, or managed GitHub-based CI/CD is required.
 
-> The items above are recommended future enhancements and were not represented as completed project activities.
-
----
-
-## 14. Conclusion
-
-This project demonstrated the full lifecycle of deploying a static website through Azure Storage. It included cloud resource provisioning, static website configuration, HTML content publication, endpoint validation, custom error page testing, content updating, blob property inspection, and resource cleanup.
-
-The successful display of the Version 2 landing page and the custom 404 page confirmed that the website configuration operated as intended. The final deletion of the lab resources also demonstrated responsible cloud resource and cost management.
+> The items above are recommended future enhancements and are not represented as completed project activities.
 
 ---
 
-## 15. Disclaimer
+## 14. Screenshot Attachment Guide
 
-This project is provided for educational and portfolio demonstration purposes only. The documented configuration is not a production-ready architecture and does not replace official Microsoft Azure documentation, organizational policies, or professional cloud security guidance.
+To make the screenshots display correctly on GitHub:
+
+1. Create a folder named `screenshots` in the repository root.
+2. Rename the screenshots exactly as listed in the repository structure.
+3. Upload all ten image files to the `screenshots` folder.
+4. Keep `README.md` in the repository root.
+5. Commit the README and screenshots to the same branch.
+6. Verify every image in GitHub's rendered README view.
+7. Match capitalization, spacing, and the `.png` extension exactly.
+8. Do not place image Markdown inside triple-backtick code blocks.
+9. Do not use a local path such as `C:\Users\...`.
+10. Review and redact every screenshot before publishing the repository.
+
+If a screenshot does not display, verify that its filename and path match the corresponding Markdown image reference exactly.
+
+---
+
+## 15. Conclusion
+
+This project demonstrated the full lifecycle of deploying a static website through Azure Storage. It included cloud resource provisioning, static website configuration, HTML content publication, endpoint validation, custom error-page testing, content updating, blob property inspection, technical documentation, and resource cleanup.
+
+The successful display of the Version 2 landing page and custom 404 page confirmed that the website configuration operated as intended. The final deletion of the lab resources also demonstrated responsible cloud-resource and cost management.
+
+---
+
+## 16. References
+
+- [Microsoft Learn: Static website hosting in Azure Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website)
+- [Microsoft Learn: Host a static website in Azure Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-how-to)
+
+---
+
+## 17. Disclaimer
+
+This project is provided for educational and portfolio-demonstration purposes only. The documented configuration is not a production-ready architecture and does not replace official Microsoft Azure documentation, organizational policies, or professional cloud-security guidance.
 
 Azure credentials, access keys, tokens, connection strings, subscription identifiers, and other sensitive information must not be published in this repository. Screenshots should be reviewed and redacted before being committed publicly.
 
