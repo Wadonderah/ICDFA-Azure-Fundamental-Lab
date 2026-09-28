@@ -1,395 +1,206 @@
 <div align="center">
 
-## Azure Resource Governance: Tags and Resource Locks
+# Azure Resource Governance
+
+## Tags and Resource Locks
 
 **Microsoft Learn Guided Project / Skillable Lab**
 
-**Prepared by:** Wadondera A. Collins  
+**Author:** Wadondera A. Collins  
 **Programme:** ICDFA Cloud Security Engineering, Cohort 11  
 **Role Focus:** Cloud Security Engineering and Azure Administration  
-**Project Status:** Completed  
-**Report Version:** 1.1
+**Status:** Completed
 
 </div>
 
 ---
 
-## Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Executive Summary](#executive-summary)
-3. [Project Objectives](#project-objectives)
-4. [Professional Value](#professional-value)
-5. [Skills Demonstrated](#skills-demonstrated)
-6. [Technologies and Tools Used](#technologies-and-tools-used)
-7. [Lab Environment](#lab-environment)
-8. [Repository Structure](#repository-structure)
-9. [Methodology](#methodology)
-10. [Evidence and Analysis](#evidence-and-analysis)
-11. [Results](#results)
-12. [Validation Checklist](#validation-checklist)
-13. [Limitations and Next Steps](#limitations-and-next-steps)
-14. [Security and Privacy Notes](#security-and-privacy-notes)
-15. [Conclusion](#conclusion)
-16. [Disclaimer](#disclaimer)
-17. [Author](#author)
-
----
-
 ## Project Overview
 
-This professional project report documents the implementation and validation of Azure resource governance controls using resource tags and management locks. The completed work covered resource creation, metadata-based organization, tag filtering, lock configuration, enforcement testing, restoration of normal access, and resource cleanup.
-
-The project was completed in a temporary Skillable Cloud Slice environment using a provided Microsoft Azure subscription. A dedicated resource group and two Azure Storage accounts were used to demonstrate how governance controls improve resource visibility and reduce the risk of accidental modification or deletion.
-
-## Executive Summary
-
-The project established a controlled Azure environment containing the `rg-gp-tags-locks` resource group and two Standard StorageV2 accounts. The resources were categorized using `department` and `environment` tags. The first storage account represented a development workload, while the second represented an operations workload. Tag-based filtering was then used to locate resources by department.
-
-Two management-lock scenarios were configured and tested. A Delete lock named `prevent-delete` protected the first storage account from deletion. A Read-only lock named `read-only-rg` prevented modification at the applicable scope. Enforcement was validated through failed tag-modification and deletion attempts. After both locks were removed, the temporary tag `lock-test: passed` confirmed that write access had been restored.
-
-The completed project demonstrates practical capability in Azure resource provisioning, governance, validation, troubleshooting, documentation, and responsible cloud cleanup.
+This completed guided project demonstrates how to organize and protect Microsoft Azure resources using resource tags and management locks. The work covered resource creation, tag-based organization, tag filtering, Delete and Read-only lock configuration, lock-enforcement testing, access restoration, and resource cleanup.
 
 ## Project Objectives
 
-- Create a dedicated Azure resource group.
-- Deploy two Standard Azure Storage accounts using LRS redundancy.
-- Apply consistent organizational tags to the resource group and storage accounts.
-- Use tag filters to distinguish development and operations resources.
+- Create a dedicated Azure resource group and two storage accounts.
+- Apply consistent department and environment tags.
+- Filter resources using organizational tag values.
 - Configure Delete and Read-only management locks.
-- Validate that the locks block the intended operations.
-- Remove the locks through a controlled process.
-- Confirm that normal write access is restored after lock removal.
-- Remove temporary resources to avoid unintended charges.
-- Produce clear evidence suitable for a professional GitHub portfolio.
+- Validate that the locks block modification and deletion.
+- Remove the locks and confirm that normal access is restored.
+- Clean up the temporary Azure resources.
 
-## Professional Value
-
-This project demonstrates job-relevant skills for cloud security, Azure administration, DevOps, and governance-focused roles. The work shows the ability to:
-
-- Translate governance requirements into Azure configurations.
-- Apply metadata standards that support resource discovery and cost-management processes.
-- Protect cloud resources from accidental deletion and modification.
-- Validate controls through expected-failure testing instead of relying only on configuration status.
-- Restore access through authorized lock removal.
-- Document technical decisions and outcomes with visual evidence.
-- Perform responsible cleanup in a temporary cloud environment.
-
-## Skills Demonstrated
-
-- Azure resource provisioning and lifecycle management
-- Resource-group administration
-- Azure Storage account deployment
-- Organizational tagging with key-value metadata
-- Tag-based resource filtering
-- Azure management-lock configuration
-- Delete-lock testing and validation
-- Read-only-lock testing and validation
-- Lock scope and inheritance awareness
-- Expected-failure testing
-- Write-access restoration verification
-- Technical evidence collection and analysis
-- Cloud cost awareness and resource cleanup
-- Security-conscious GitHub documentation
-
-## Technologies and Tools Used
-
-| Technology or Tool | Project Use | Version or Configuration |
-|---|---|---|
-| Microsoft Azure Portal | Created, tagged, protected, tested, and removed resources | Continuously updated web service; build not specified |
-| Azure Resource Manager | Managed the resource group, tags, filters, and management locks | Service-managed; API version not specified |
-| Azure Storage | Provided the resources used for governance testing | StorageV2, Standard performance |
-| Azure Blob Storage / Azure Data Lake Storage | Storage service option used during deployment | Service version not specified |
-| Locally Redundant Storage | Provided the selected redundancy configuration | LRS |
-| Azure Resource Tags | Classified resources by department and environment | Key-value metadata |
-| Azure Management Locks | Protected resources against deletion and modification | Delete and Read-only |
-| Skillable Cloud Slice | Hosted the temporary Azure lab environment | Version not specified |
-| Mentor | Provided optional AI-assisted lab guidance | Pilot version; build not specified |
-| SEA-Dev virtual machine | Provided access to the lab environment | Operating system version not specified |
-| GitHub Markdown | Structured the portfolio report and evidence | Markdown |
-
-> Version numbers are not invented where the lab instructions or screenshots did not provide them.
-
-## Lab Environment
+## Technologies and Environment
 
 | Component | Configuration |
 |---|---|
+| Microsoft Azure Portal | Continuously updated web service; build not specified |
+| Azure Resource Manager | Resource groups, tags, filters, and management locks |
+| Azure Storage | StorageV2, Standard performance |
+| Redundancy | Locally Redundant Storage (LRS) |
 | Resource group | `rg-gp-tags-locks` |
 | Development storage account | `stgptagslock65463711` |
 | Operations storage account | `stgptagsops65463711` |
 | Region | East US |
-| Storage account kind | StorageV2 |
-| Performance | Standard |
-| Redundancy | Locally Redundant Storage (LRS) |
-| Development tags | `department: development`, `environment: test` |
-| Operations tags | `department: operations`, `environment: test` |
-| Delete lock | `prevent-delete` |
-| Read-only lock | `read-only-rg` |
-| Restoration validation tag | `lock-test: passed` |
-| Subscription | Temporary Azure lab subscription |
-
-## Repository Structure
-
-```text
-azure-resource-governance-tags-locks/
-├── README.md
-├── report/
-│   └── Azure-Resource-Governance-Report.md
-└── images/
-    ├── Fig01 Storage Account Listed.png
-    ├── Fig02 Department Tag Filter.png
-    ├── Fig03 Read Only Lock Enforcement.png
-    ├── Fig04 Development Storage Account Tags.png
-    ├── Fig05 Add Read Only Lock.png
-    ├── Fig06 Storage Account Configuration.png
-    ├── Fig07 Delete Lock Enforcement.png
-    ├── Fig08 Add Prevent Delete Lock.png
-    ├── Fig09 Write Access Restored.png
-    ├── Fig10 Confirmed Prevent Delete Lock.png
-    ├── Fig11 Locks Removed.png
-    ├── Fig12 Resource Group Tags.png
-    ├── Fig13 Operations Storage Account Tags.png
-    └── Fig14 Confirmed Read Only Lock.png
-```
+| Lab platform | Skillable Cloud Slice |
 
 ## Methodology
 
-### 1. Prepare the Environment
-
-A dedicated resource group named `rg-gp-tags-locks` was created in East US. The isolated resource group provided a clear scope for governance testing and simplified final cleanup.
-
-### 2. Provision the Test Resources
-
-Two Standard StorageV2 accounts using LRS redundancy were deployed:
-
-- `stgptagslock65463711` for the development scenario
-- `stgptagsops65463711` for the operations scenario
-
-### 3. Apply Organizational Tags
-
-The resource group and development storage account received the following tags:
-
-- `department: development`
-- `environment: test`
-
-The operations storage account received:
-
-- `department: operations`
-- `environment: test`
-
-### 4. Validate Tag-Based Organization
-
-The `department` tag was used as a filter. The filter demonstrated how consistent key-value metadata supports targeted resource discovery and operational organization.
-
-### 5. Configure Management Locks
-
-A Delete lock named `prevent-delete` was applied to the development storage account. A Read-only lock named `read-only-rg` was configured at the applicable exercise scope.
-
-### 6. Test Lock Enforcement
-
-Two expected-failure tests were performed:
-
-1. A new tag was submitted while the Read-only lock was active. Azure returned a `ScopeLocked` error.
-2. The protected storage account was selected for deletion. Azure blocked the operation because the resource scope was locked.
-
-### 7. Remove Locks and Restore Access
-
-Both locks were removed. The Locks pane was checked to confirm that no lock remained on the selected resource. The temporary tag `lock-test: passed` was then saved successfully, verifying that write access had been restored.
-
-### 8. Clean Up Resources
-
-The temporary validation tag and guided-project resources were removed. Cleanup prevented the temporary lab resources from remaining active after validation.
+1. Created `rg-gp-tags-locks` in East US.
+2. Configured and deployed two Standard StorageV2 accounts using LRS.
+3. Applied resource-group and storage-account tags.
+4. Filtered resources by the `department` tag.
+5. Applied the `prevent-delete` Delete lock.
+6. Applied the `read-only-rg` Read-only lock.
+7. Tested Read-only and Delete lock enforcement.
+8. Removed the locks.
+9. Confirmed restored write access with `lock-test: passed`.
+10. Cleaned up the temporary resources.
 
 ## Evidence and Analysis
 
-> Rename the screenshots exactly as listed below and place them in the repository's `images/` directory. Because this report is stored inside `report/`, each Markdown image path begins with `../images/`.
+> Place all screenshots in an `images/` folder. Filenames, headings, image links, and evidence statements below match the visible Azure Portal content exactly.
 
-### Evidence 1: Storage Account Provisioning
+### Resource Creation
 
-![Storage account listed](../images/Fig01%20Storage%20Account%20Listed.png)
+#### Fig01 Storage Account Configuration.png
 
-**Figure 1: Storage account listed in Azure Storage Center.**
+<img width="1052" height="603" alt="Fig01 Storage Account Configuration" src="https://github.com/user-attachments/assets/2d0bac8b-35a6-49c0-afd5-bc2e346bcf34" />
 
-**Analysis:** The Azure Storage Center displays `stgptagslock65463711` as a StorageV2 account in the `rg-gp-tags-locks` resource group and East US region. This provides evidence that the first test resource was provisioned in the intended governance scope.
 
-### Evidence 2: Department Tag Filter
+**Visible evidence:** The **Create a storage account** Review + create page shows resource group `rg-gp-tags-locks`, location **East US**, storage account `stgptagsops65463711`, primary service **Azure Blob Storage or Azure Data Lake Storage**, Standard performance, and LRS replication.
 
-![Department tag filter](../images/Fig02%20Department%20Tag%20Filter.png)
+#### Fig02 Storage Account Listed.png
 
-**Figure 2: Filtering resources by the `department` tag.**
+<img width="1052" height="494" alt="Fig02 Storage Account Listed" src="https://github.com/user-attachments/assets/e44057cc-d6b0-4734-b8cf-c2ad3da6d6fc" />
 
-**Analysis:** The filter pane shows the `department` key, the Equals operator, and the `development` value. This demonstrates practical use of tags for targeted resource discovery.
 
-### Evidence 3: Read-Only Lock Enforcement
+**Visible evidence:** Azure Storage Center lists `stgptagslock65463711` as a **Storage account**, kind **StorageV2**, in `rg-gp-tags-locks`, located in **East US**.
 
-![Read only lock enforcement](../images/Fig03%20Read%20Only%20Lock%20Enforcement.png)
+### Resource Tagging and Filtering
 
-**Figure 3: Tag modification blocked by the active Read-only lock.**
+#### Fig03 Resource Group Tags.png
 
-**Analysis:** Azure displays a `ScopeLocked` error after an attempted `test-tag: blocked` update. This is direct evidence that the active control prevented modification as expected.
+<img width="1056" height="641" alt="Fig03 Resource Group Tags" src="https://github.com/user-attachments/assets/538efe7e-2fd5-4dfc-b264-0858414abdc6" />
 
-### Evidence 4: Development Storage Account Tags
 
-![Development storage account tags](../images/Fig04%20Development%20Storage%20Account%20Tags.png)
+**Visible evidence:** The Tags pane for `rg-gp-tags-locks` shows `department: development` and `environment: test`.
 
-**Figure 4: Development tags applied to the first storage account.**
+#### Fig04 Development Storage Account Tags.png
 
-**Analysis:** The Tags pane displays `department: development` and `environment: test` on `stgptagslock65463711`. This confirms consistent classification of the development resource.
+<img width="1052" height="626" alt="Fig04 Development Storage Account Tags" src="https://github.com/user-attachments/assets/3070efe7-71a6-49f6-888c-0cc2b15da45a" />
 
-### Evidence 5: Read-Only Lock Configuration
 
-![Add read only lock](../images/Fig05%20Add%20Read%20Only%20Lock.png)
+**Visible evidence:** The Tags pane for `stgptagslock65463711` shows `department: development` and `environment: test`.
 
-**Figure 5: Configuration of the `read-only-rg` lock.**
+#### Fig05 Operations Storage Account Tags.png
 
-**Analysis:** The Add lock pane shows the `read-only-rg` name and Read-only lock type. This documents the control configuration before enforcement testing.
+<img width="1050" height="603" alt="Fig05 Operations Storage Account Tags" src="https://github.com/user-attachments/assets/aec36f75-ceff-483e-9294-f4221b966dce" />
 
-### Evidence 6: Storage Account Configuration
 
-![Storage account configuration](../images/Fig06%20Storage%20Account%20Configuration.png)
+**Visible evidence:** The Tags pane for `stgptagsops65463711` shows `department: operations` and `environment: test`.
 
-**Figure 6: Review and create settings for the operations storage account.**
+#### Fig06 Department Tag Filter.png
 
-**Analysis:** The review page shows the resource group, East US region, `stgptagsops65463711`, Standard performance, and LRS replication. This validates the main deployment settings used for the second account.
+<img width="1055" height="528" alt="Fig06 Department Tag Filter" src="https://github.com/user-attachments/assets/e428f390-001f-48a9-90b0-04b6447b3ea7" />
 
-### Evidence 7: Delete Lock Enforcement
 
-![Delete lock enforcement](../images/Fig07%20Delete%20Lock%20Enforcement.png)
+**Visible evidence:** The Resource groups filter pane shows the `department` tag, the **Equals** operator, and the `development` value.
 
-**Figure 7: Storage account deletion blocked by an active lock.**
+### Resource Lock Configuration
 
-**Analysis:** The Azure notification reports that the deletion failed because the scope was locked. This confirms that the management lock protected the selected storage account from removal.
+#### Fig07 Add Prevent Delete Lock.png
 
-### Evidence 8: Delete Lock Configuration
+<img width="1054" height="622" alt="Fig07 Add Prevent Delete Lock" src="https://github.com/user-attachments/assets/76205012-5491-4758-a018-e7fadf0c4ea9" />
 
-![Add prevent delete lock](../images/Fig08%20Add%20Prevent%20Delete%20Lock.png)
 
-**Figure 8: Configuration of the `prevent-delete` lock.**
+**Visible evidence:** The Add lock pane for `stgptagslock65463711` shows lock name `prevent-delete`, lock type **Delete**, and the note **Prevents accidental deletion of test storage account**.
 
-**Analysis:** The Add lock pane shows the `prevent-delete` name, Delete lock type, and a note describing protection against accidental deletion. This demonstrates deliberate implementation of a resource-protection control.
+#### Fig08 Confirmed Prevent Delete Lock.png
 
-### Evidence 9: Restored Write Access
+<img width="679" height="516" alt="Fig08 Confirmed Prevent Delete Lock" src="https://github.com/user-attachments/assets/ffeb3fbf-8797-42ef-9e27-107f56d1898d" />
 
-![Write access restored](../images/Fig09%20Write%20Access%20Restored.png)
 
-**Figure 9: Successful `lock-test: passed` validation tag.**
+**Visible evidence:** The Locks pane for `stgptagslock65463711` lists `prevent-delete` with lock type **Delete**.
 
-**Analysis:** The resource displays `lock-test: passed` after lock removal. This verifies that normal write operations were restored and completes the apply, enforce, remove, and retest lifecycle.
+#### Fig09 Add Read Only Lock.png
 
-### Evidence 10: Delete Lock Confirmation
+<img width="1053" height="559" alt="Fig09 Add Read Only Lock" src="https://github.com/user-attachments/assets/2efe553c-d9f4-4361-9721-b761bf858874" />
 
-![Confirmed prevent delete lock](../images/Fig10%20Confirmed%20Prevent%20Delete%20Lock.png)
 
-**Figure 10: Confirmed `prevent-delete` lock on the development storage account.**
+**Visible evidence:** The Add lock pane for `stgptagsops65463711` shows lock name `read-only-rg` and lock type **Read-only**.
 
-**Analysis:** The Locks pane lists `prevent-delete` with the Delete lock type and the storage account as its scope. This confirms successful creation of the deletion-protection control.
+#### Fig10 Confirmed Read Only Lock.png
 
-### Evidence 11: Lock Removal Verification
+<img width="673" height="496" alt="Fig10 Confirmed Read Only Lock" src="https://github.com/user-attachments/assets/4982cb52-3949-4dd2-b66f-fd22ee74d9c4" />
 
-![Locks removed](../images/Fig11%20Locks%20Removed.png)
 
-**Figure 11: Selected storage account showing no active locks.**
+**Visible evidence:** The Locks pane for `stgptagsops65463711` lists `read-only-rg` with a Read-only lock type.
 
-**Analysis:** The Locks pane states that the selected resource has no locks. This provides evidence that lock removal was completed before restoration testing and cleanup.
+### Lock-Enforcement Testing
 
-### Evidence 12: Resource Group Tags
+#### Fig11 Read Only Lock Enforcement.png
 
-![Resource group tags](../images/Fig12%20Resource%20Group%20Tags.png)
+<img width="1051" height="604" alt="Fig11 Read Only Lock Enforcement" src="https://github.com/user-attachments/assets/80278348-9f99-4070-8ecc-6a26255368bb" />
 
-**Figure 12: Organizational tags applied to `rg-gp-tags-locks`.**
 
-**Analysis:** The resource-group Tags pane displays `department: development` and `environment: test`. This confirms that organizational metadata was applied at resource-group scope.
+**Visible evidence:** The Tags pane for `stgptagsops65463711` shows an attempted `test-tag: blocked` update and the error **Could not save the tags** with error code `ScopeLocked`.
 
-### Evidence 13: Operations Storage Account Tags
+#### Fig12 Delete Lock Enforcement.png
 
-![Operations storage account tags](../images/Fig13%20Operations%20Storage%20Account%20Tags.png)
+<img width="1055" height="642" alt="Fig12 Delete Lock Enforcement" src="https://github.com/user-attachments/assets/0114c1bf-4ced-4c33-925d-d29f9b458a9b" />
 
-**Figure 13: Operations tags applied to the second storage account.**
 
-**Analysis:** The Tags pane displays `department: operations` and `environment: test` on `stgptagsops65463711`. This confirms departmental separation while retaining a consistent environment classification.
+**Visible evidence:** Azure Storage Center shows that the delete command for `stgptagslock65463711` failed because the scope was locked.
 
-### Evidence 14: Read-Only Lock Confirmation
+### Lock Removal and Access Restoration
 
-![Confirmed read only lock](../images/Fig14%20Confirmed%20Read%20Only%20Lock.png)
+#### Fig13 Locks Removed.png
 
-**Figure 14: Confirmed `read-only-rg` lock in the Locks pane.**
+<img width="1053" height="604" alt="Fig13 Locks Removed" src="https://github.com/user-attachments/assets/2ec29d0b-55d6-4834-bef9-ceed945c0a19" />
 
-**Analysis:** The Locks pane displays `read-only-rg` with the Read-only lock type. This confirms that the modification-prevention control was active before validation.
 
-## Results
+**Visible evidence:** The Locks pane for `stgptagsops65463711` displays **This resource has no locks**.
 
-- The dedicated resource group was created successfully.
-- Two Standard StorageV2 accounts using LRS were deployed.
-- Department and environment tags were applied consistently.
-- Tag-based filtering demonstrated metadata-driven resource discovery.
-- Delete and Read-only locks were configured successfully.
-- Modification and deletion operations were blocked while the applicable locks were active.
-- Lock removal restored normal write access.
-- Temporary resources were cleaned up after validation.
+#### Fig14 Write Access Restored.png
+
+<img width="862" height="544" alt="Fig14 Write Access Restored" src="https://github.com/user-attachments/assets/10073ccf-3092-47b6-b6ce-fb1afc0ba261" />
+
+
+**Visible evidence:** The Tags pane for `stgptagsops65463711` displays `lock-test: passed`, confirming that the tag was saved after lock removal.
 
 ## Validation Checklist
 
-### Resource Creation and Tagging
-
-- [x] Created `rg-gp-tags-locks`.
-- [x] Created `stgptagslock65463711`.
-- [x] Created `stgptagsops65463711`.
-- [x] Applied development and test tags to the resource group.
-- [x] Applied development and test tags to the first storage account.
-- [x] Applied operations and test tags to the second storage account.
-- [x] Tested filtering by department.
-
-### Lock Configuration and Enforcement
-
-- [x] Applied the `prevent-delete` Delete lock.
-- [x] Applied the `read-only-rg` Read-only lock.
-- [x] Confirmed both lock configurations.
-- [x] Confirmed that the Read-only lock blocked tag modification.
-- [x] Confirmed that the Delete lock blocked storage-account deletion.
+- [x] Created the resource group and two storage accounts.
+- [x] Applied the correct resource-group and storage-account tags.
+- [x] Tested filtering with the `department` tag.
+- [x] Applied and confirmed the Delete lock.
+- [x] Applied and confirmed the Read-only lock.
+- [x] Confirmed that tag modification was blocked.
+- [x] Confirmed that storage-account deletion was blocked.
 - [x] Removed the configured locks.
 - [x] Confirmed that no lock remained on the selected resource.
-- [x] Added `lock-test: passed` to confirm restored write access.
+- [x] Confirmed restored write access with `lock-test: passed`.
+- [x] Cleaned up the temporary lab resources.
 
-### Cleanup
+## Skills Demonstrated
 
-- [x] Removed the temporary validation tag.
-- [x] Removed applicable resource locks before cleanup.
-- [x] Deleted the guided-project resources.
+- Azure resource provisioning and lifecycle management
+- Azure resource tagging and filtering
+- Delete and Read-only lock configuration
+- Governance-control testing and validation
+- Access-restoration verification
+- Cloud cleanup and cost awareness
+- Professional technical documentation
 
-## Limitations and Next Steps
+## Security Notes
 
-### Limitations
-
-- The project was completed in a temporary training subscription rather than a production environment.
-- Configuration was performed primarily through the Azure Portal.
-- Azure Policy enforcement, automation, and infrastructure as code were outside the guided lab scope.
-- The available screenshots do not include a final portal view showing the deleted resource group.
-- Service and API version numbers were not provided and were not invented.
-
-### Recommended Next Steps
-
-- Recreate the deployment with Bicep or Terraform for repeatability.
-- Use Azure Policy to enforce and remediate approved tags.
-- Extend the tagging model with organization-approved fields such as owner, cost center, application, and data classification.
-- Restrict lock-management permissions through least-privilege Azure RBAC.
-- Monitor important governance changes using Azure Activity Log alerts.
-- Test lock behavior at subscription, resource-group, and individual-resource scopes.
-- Add automated validation to a CI/CD workflow.
-
-## Security and Privacy Notes
-
-- No passwords, access tokens, tenant usernames, or other confidential lab credentials are included.
-- Azure tags should not contain credentials, secrets, personal data, or other sensitive information.
-- Management locks complement, but do not replace, Azure RBAC, Azure Policy, monitoring, and approved change procedures.
-- Screenshots should be reviewed before public publication to ensure that no confidential identifiers are exposed.
-
-## Conclusion
-
-This completed project demonstrates an end-to-end Azure governance workflow involving resource creation, classification, protection, enforcement testing, access restoration, and cleanup. The evidence shows practical familiarity with Azure Resource Manager, StorageV2 accounts, organizational tags, and management locks. The work is directly relevant to entry-level cloud security, Azure administration, and DevOps responsibilities.
+- No passwords, access tokens, or confidential lab credentials are included.
+- Azure tags should not contain credentials, secrets, personal data, or other sensitive values.
+- Management locks complement Azure RBAC, Azure Policy, monitoring, and approved change-management processes.
 
 ## Disclaimer
 
-This report documents a completed training exercise performed in a temporary Microsoft Azure lab environment provided through Skillable. The resource names, settings, screenshots, and observations are included as evidence of practical learning. This report is not production implementation guidance. Azure interfaces and service behavior may change, so all configurations should be validated against current Microsoft documentation and organizational policy before production use.
+This repository documents a completed training exercise performed in a temporary Microsoft Azure lab environment provided through Skillable. Resource settings and screenshots are included as evidence of practical learning. Azure interfaces and service behavior may change, so production configurations should be validated against current Microsoft documentation and organizational policy.
 
 ## Author
 
