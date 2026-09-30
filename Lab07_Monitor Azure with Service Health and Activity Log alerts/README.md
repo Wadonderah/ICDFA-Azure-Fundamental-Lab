@@ -1,360 +1,306 @@
 <div align="center">
 
-# Azure Monitoring and Alerting
+# 🔔 Azure Monitoring and Alerting: Complete Guide
 
-### Service Health Alerts, Activity Log Alerts, and Reusable Email Notifications
+### Mentor Pilot Program | Completed Assignment
 
 **Author:** Wadondera A. Collins  
 **Role:** ICDFA Trainee | Cohort 11 | Cloud Security Engineering  
-**Platform:** Microsoft Azure | Skillable Lab Environment  
-**Completion Date:** September 30, 2026  
-**Project Status:** Completed
+**Completion Date:** September 30, 2026
+
+[![Azure](https://img.shields.io/badge/Microsoft%20Azure-Monitor-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
+[![Alerts](https://img.shields.io/badge/Focus-Alerting%20and%20Notifications-6F42C1)](#-skills-demonstrated)
+[![Status](https://img.shields.io/badge/Status-Completed-2EA44F)](#-completion-checklist)
+[![Service Health](https://img.shields.io/badge/Azure-Service%20Health-00A4EF)](#-exercise-2-create-a-service-health-alert)
+
+*A hands-on Azure monitoring lab covering reusable action groups, email notification testing, Service Health alerts, Activity Log alerts, configuration validation, and responsible cleanup.*
 
 </div>
 
 ---
 
-## Table of Contents
+## 📖 Table of Contents
 
-- [Project Overview](#project-overview)
-- [Executive Summary](#executive-summary)
-- [Project Objectives](#project-objectives)
-- [Professional Value](#professional-value)
-- [Skills Demonstrated](#skills-demonstrated)
-- [Tools and Azure Services](#tools-and-azure-services)
-- [Lab Environment](#lab-environment)
-- [Repository Structure](#repository-structure)
-- [Implementation Methodology](#implementation-methodology)
-  - [Exercise 1: Create and Test an Action Group](#exercise-1-create-and-test-an-action-group)
-  - [Exercise 2: Create a Service Health Alert](#exercise-2-create-a-service-health-alert)
-  - [Exercise 3: Create an Activity Log Alert](#exercise-3-create-an-activity-log-alert)
-  - [Clean-Up and Verification](#clean-up-and-verification)
-- [Evidence and Analysis](#evidence-and-analysis)
-- [Project Results](#project-results)
-- [Validation Checklist](#validation-checklist)
-- [Limitations and Next Steps](#limitations-and-next-steps)
-- [Security and Operational Notes](#security-and-operational-notes)
-- [Conclusion](#conclusion)
-- [Disclaimer](#disclaimer)
-- [Author](#author)
+- [Project Overview](#-project-overview)
+- [Learning Objectives](#-learning-objectives)
+- [Architecture and Resources](#-architecture-and-resources)
+- [Prerequisites and Security](#-prerequisites-and-security)
+- [Exercise 1: Create and Test an Action Group](#-exercise-1-create-and-test-an-action-group)
+- [Exercise 2: Create a Service Health Alert](#-exercise-2-create-a-service-health-alert)
+- [Exercise 3: Create an Activity Log Alert](#-exercise-3-create-an-activity-log-alert)
+- [Exercise 4: Clean Up and Verify](#-exercise-4-clean-up-and-verify)
+- [Screenshot Evidence](#-screenshot-evidence)
+- [Validation Results](#-validation-results)
+- [Command Reference](#-command-reference)
+- [Troubleshooting](#-troubleshooting)
+- [Skills Demonstrated](#-skills-demonstrated)
+- [Key Takeaways](#-key-takeaways)
+- [Completion Checklist](#-completion-checklist)
+- [Author](#-author)
+- [Acknowledgements](#-acknowledgements)
+- [Disclaimer](#-disclaimer)
 
 ---
 
-## Project Overview
+## 🚀 Project Overview
 
-This completed project demonstrates the implementation of a practical monitoring and notification baseline in Microsoft Azure. The solution combines an Azure Monitor action group, an Azure Service Health alert, and an Activity Log alert to improve awareness of platform events and important administrative changes.
+This repository documents the successful completion of the **Azure Monitoring and Alerting** lab in the **Mentor Pilot Program**. The project established a reusable email notification path and connected it to two operational monitoring scenarios.
 
-A reusable email notification channel was created and tested before being attached to two alert rules. The first rule monitored Azure service issues and planned maintenance. The second monitored resource-group deletion activity. Both rules were enabled, reviewed, and validated before the project resources were removed.
+The solution included:
 
----
+1. An action group named `ag-gp-ops-email`.
+2. A tested email notification named `ops-team-email`.
+3. A Service Health alert named `ar-gp-service-health`.
+4. An Activity Log alert named `ar-gp-activity-delete`.
+5. A dedicated resource group named `rg-gp-monitoring-alerts`.
+6. Validation of alert conditions, severity, action-group association, and enabled state.
+7. Ordered cleanup and post-deletion verification.
 
-## Executive Summary
-
-Reliable cloud operations depend on timely visibility into service disruptions, planned maintenance, and high-impact administrative actions. In this project, I created a reusable Azure email notification path and connected it to two monitoring scenarios.
-
-The completed solution included:
-
-1. An action group named `ag-gp-ops-email` for reusable email notifications.
-2. A Service Health alert named `ar-gp-service-health` for service issues and planned maintenance.
-3. An Activity Log alert named `ar-gp-activity-delete` for resource-group deletion events.
-4. A dedicated resource group named `rg-gp-monitoring-alerts`.
-5. Validation of notification delivery, alert conditions, action-group associations, severity, and enabled state.
-6. Complete resource cleanup and post-deletion verification.
-
-This project demonstrates practical Azure monitoring, incident-awareness, cloud administration, and security-conscious documentation skills.
+> [!NOTE]
+> Mentor was available throughout the lab as an AI-powered assistant for navigating instructions and troubleshooting exercises.
 
 ---
 
-## Project Objectives
+## 🎯 Learning Objectives
 
-- Create a dedicated resource group for monitoring resources.
-- Configure a reusable action group with email notification delivery.
-- Test the action group before attaching it to operational alert rules.
+By completing this lab, I demonstrated the ability to:
+
+- Create a dedicated Azure monitoring resource group.
+- Configure a reusable Azure Monitor action group.
+- Configure and test email notification delivery.
 - Review Azure Service Health information.
-- Create a Service Health alert for service issues and planned maintenance.
-- Create an Activity Log alert for resource-group deletion events.
+- Create a Service Health alert for incidents and planned maintenance.
+- Create an Activity Log alert for resource-group deletion.
 - Reuse one action group across multiple alert rules.
-- Validate each alert rule's condition, action, severity, and enabled state.
-- Remove all monitoring resources after completing the lab.
-- Verify that cleanup was successful.
+- Assign and verify alert severity.
+- Review alert conditions, actions, and enabled state.
+- Remove temporary monitoring resources and verify cleanup.
 
 ---
 
-## Professional Value
-
-This project reflects responsibilities commonly associated with Azure administration, cloud operations, security operations, and Cloud Security Engineering.
-
-It demonstrates the ability to:
-
-- Build reusable notification workflows.
-- Test notification channels before operational use.
-- Monitor Azure platform incidents and maintenance events.
-- Detect high-impact Azure management operations.
-- Apply meaningful alert severity.
-- Review monitoring configurations for accuracy.
-- Protect credentials and personal information in technical documentation.
-- Maintain cloud resource hygiene through verified cleanup.
-
----
-
-## Skills Demonstrated
-
-- Azure Monitor administration
-- Azure resource-group management
-- Action group creation and testing
-- Email notification configuration
-- Azure Service Health review
-- Service Health alert creation
-- Activity Log signal selection
-- Alert scope configuration
-- Alert severity classification
-- Alert-rule validation
-- Operational monitoring design
-- Resource cleanup and verification
-- Professional GitHub documentation
-
----
-
-## Tools and Azure Services
-
-| Tool or Service | Purpose |
-|---|---|
-| Microsoft Azure Portal | Configured and validated the monitoring solution |
-| Azure Monitor | Managed alerts, alert rules, and action groups |
-| Azure Action Groups | Provided a reusable email notification channel |
-| Azure Service Health | Supplied service issue and planned maintenance events |
-| Azure Activity Log | Supplied Azure management-operation events |
-| Azure Alert Rules | Evaluated conditions and triggered notifications |
-| Azure Resource Groups | Organized the monitoring resources |
-| Skillable Lab Environment | Provided the temporary guided Azure environment |
-
-> Azure services are continuously managed cloud services. Fixed product versions were not shown in the lab instructions, so unsupported version numbers are not listed.
-
----
-
-## Lab Environment
-
-| Item | Configuration |
-|---|---|
-| Resource group | `rg-gp-monitoring-alerts` |
-| Action group | `ag-gp-ops-email` |
-| Display name | `OpsEmail` |
-| Action group region | Global |
-| Notification name | `ops-team-email` |
-| Notification method | Email |
-| Service Health alert | `ar-gp-service-health` |
-| Service Health event types | Service issue and Planned maintenance |
-| Activity Log alert | `ar-gp-activity-delete` |
-| Activity Log signal | Delete resource group |
-| Activity Log alert severity | `Sev 2 - Warning` |
-| Alert state | Enabled upon creation |
-
-> Lab passwords, Temporary Access Pass tokens, usernames, personal email addresses, subscription identifiers, and tenant details are intentionally excluded.
-
----
-
-## Repository Structure
+## 🏗️ Architecture and Resources
 
 ```text
-azure-monitoring-alerts/
-|
-+-- README.md
-+-- screenshots/
-|   +-- Fig01 Monitoring Resource Group Created.png
-|   +-- Fig02 Action Group Configuration.png
-|   +-- Fig03 Action Group Test Success.png
-|   +-- Fig04 Azure Test Email Notification.png
-|   +-- Fig05 Service Health Review.png
-|   +-- Fig06 Service Health Alert Created.png
-|   +-- Fig07 Activity Log Delete Condition.png
-|   +-- Fig08 Activity Log Alert Created.png
-|   +-- Fig09 Alert Rules Validation.png
-|   +-- Fig10 Alert Rule Details Reviewed.png
-|   +-- Fig11 Monitoring Cleanup Verified.png
-+-- LICENSE
+Azure Subscription
+└── Resource Group: rg-gp-monitoring-alerts
+    ├── Action Group: ag-gp-ops-email
+    │   ├── Display Name: OpsEmail
+    │   ├── Region: Global
+    │   └── Email Notification: ops-team-email
+    ├── Service Health Alert: ar-gp-service-health
+    │   ├── Service issue
+    │   ├── Planned maintenance
+    │   └── Action: ag-gp-ops-email
+    └── Activity Log Alert: ar-gp-activity-delete
+        ├── Signal: Delete resource group
+        ├── Severity: Sev 2 - Warning
+        └── Action: ag-gp-ops-email
 ```
 
-Only include screenshots that are available and verified. Remove unused placeholders from the final repository.
+| Resource | Name or Setting | Purpose |
+|---|---|---|
+| Resource group | `rg-gp-monitoring-alerts` | Monitoring resource boundary |
+| Action group | `ag-gp-ops-email` | Reusable notification channel |
+| Display name | `OpsEmail` | Short action-group display name |
+| Notification | `ops-team-email` | Authorized email receiver |
+| Service Health alert | `ar-gp-service-health` | Platform incident and maintenance awareness |
+| Activity Log alert | `ar-gp-activity-delete` | Resource-group deletion detection |
+| Severity | `Sev 2 - Warning` | Activity Log alert classification |
+
+> [!NOTE]
+> **Final state:** The alert rules, action group, and resource group were deleted after validation.
 
 ---
 
-## Implementation Methodology
+## 🔐 Prerequisites and Security
 
-### Exercise 1: Create and Test an Action Group
+### Prerequisites
 
-#### Task 1: Prepare the environment
+- Access to the [Azure portal](https://portal.azure.com/)
+- An authorized Skillable Azure lab subscription
+- Permission to create resource groups, action groups, and alert rules
+- Read access to the selected monitoring scope
+- An authorized email address for notification testing
 
-1. Signed in to the Azure Portal using the temporary lab account.
-2. Opened **Resource groups**.
-3. Created `rg-gp-monitoring-alerts`.
-4. Selected the preferred Azure region.
-5. Identified an authorized email address for notifications.
+### Tools and Environment
+
+| Tool or Service | Version or Status | Purpose |
+|---|---|---|
+| Microsoft Azure portal | Version not provided | Monitoring configuration and validation |
+| Azure Monitor | Managed Azure service | Alerts, rules, and action groups |
+| Azure Action Groups | Managed Azure feature | Reusable notifications |
+| Azure Service Health | Managed Azure service | Platform health notifications |
+| Azure Activity Log | Managed Azure service | Management-operation events |
+| Skillable Lab Environment | Version not provided | Guided educational subscription |
+
+> [!NOTE]
+> Fixed product versions were not displayed in the lab instructions and are not estimated here.
+
+### Security Notice
+
+Passwords, Temporary Access Pass codes, usernames, email addresses, subscription identifiers, tenant information, and authentication secrets are intentionally **not included**.
+
+> [!CAUTION]
+> Review screenshots before publication and redact email addresses, usernames, subscription IDs, tenant IDs, and access tokens.
+
+---
+
+## 📧 Exercise 1: Create and Test an Action Group
+
+### 1. Prepare the Environment
+
+1. Sign in to the Azure portal with the authorized lab account.
+2. Open **Resource groups**.
+3. Create `rg-gp-monitoring-alerts` in the selected region.
+4. Identify an authorized notification address without publishing it.
 
 **Validation:** The monitoring resource group was created successfully.
 
-#### Task 2: Create the action group
+### 2. Create the Action Group
 
-1. Opened **Monitor** in the Azure Portal.
-2. Selected **Alerts** and then **Action groups**.
-3. Started the action-group creation workflow.
-4. Selected `rg-gp-monitoring-alerts` as the resource group.
-5. Selected **Global** as the region.
-6. Entered `ag-gp-ops-email` as the action group name.
-7. Entered `OpsEmail` as the display name.
-8. Added an **Email/SMS message/Push/Voice** notification.
-9. Named the notification `ops-team-email`.
-10. Enabled email and entered the authorized notification address.
-11. Reviewed and created the action group.
+Configure the action group with the following values:
 
-**Validation:** `ag-gp-ops-email` appeared in the action-group list with an email notification configured.
+| Setting | Value |
+|---|---|
+| Resource group | `rg-gp-monitoring-alerts` |
+| Region | Global |
+| Action group name | `ag-gp-ops-email` |
+| Display name | `OpsEmail` |
+| Notification type | Email/SMS message/Push/Voice |
+| Notification name | `ops-team-email` |
+| Notification method | Email |
 
-#### Task 3: Test the action group
+**Validation:** `ag-gp-ops-email` appeared in the action-group list with the email notification configured.
 
-1. Opened `ag-gp-ops-email`.
-2. Selected **Test action group**.
-3. Chose **Service Health** as the sample type.
-4. Confirmed that `ops-team-email` was selected.
-5. Started the test.
-6. Confirmed that the test status displayed **Success**.
-7. Verified receipt of the Azure test email.
+### 3. Test the Action Group
 
-**Validation:** The action-group test succeeded and the notification was received.
+1. Open `ag-gp-ops-email`.
+2. Select **Test action group**.
+3. Choose **Service Health** as the sample type.
+4. Confirm `ops-team-email` is selected.
+5. Start the test.
+6. Verify the test status and notification delivery.
+
+**Validation:** The test displayed **Success**, and the authorized mailbox received the Azure test email.
 
 ---
 
-### Exercise 2: Create a Service Health Alert
+## 🩺 Exercise 2: Create a Service Health Alert
 
-#### Task 1: Review Service Health
+### 1. Review Service Health
 
-The following Service Health areas were reviewed:
+Review the following areas:
 
-- **Service issues** for active incidents
-- **Planned maintenance** for upcoming maintenance windows
-- **Health advisories** for non-critical recommendations
-- **Health history** for earlier incidents and resolution information
+- Service issues
+- Planned maintenance
+- Health advisories
+- Health history
 
-**Validation:** All four required Service Health areas were reviewed.
+**Validation:** All four Service Health areas were reviewed.
 
-#### Task 2: Create the Service Health alert
+### 2. Configure the Service Health Alert
 
-1. Selected **Create service health alert**.
-2. Selected the provided Azure subscription.
-3. Retained all services as permitted by the lab.
-4. Used the required Global region configuration.
-5. Selected **Service issue** and **Planned maintenance**.
-6. Attached `ag-gp-ops-email` on the **Actions** tab.
-7. Selected `rg-gp-monitoring-alerts` on the **Details** tab.
-8. Named the rule `ar-gp-service-health`.
-9. Confirmed that the rule was enabled upon creation.
-10. Created the alert rule.
+1. Select **Create service health alert**.
+2. Select the lab subscription.
+3. Retain the services permitted by the lab.
+4. Use the required Global configuration.
+5. Select **Service issue** and **Planned maintenance**.
+6. Attach `ag-gp-ops-email`.
+7. Select `rg-gp-monitoring-alerts` for the rule.
+8. Name the rule `ar-gp-service-health`.
+9. Confirm the rule is enabled upon creation.
+10. Create the rule.
 
 **Validation:** `ar-gp-service-health` was created, enabled, and connected to the correct action group.
 
 ---
 
-### Exercise 3: Create an Activity Log Alert
+## ⚠️ Exercise 3: Create an Activity Log Alert
 
-#### Task 1: Open alert-rule creation
+### 1. Configure the Scope and Condition
 
-1. Opened **Monitor**.
-2. Selected **Alerts**.
-3. Selected **Create** and then **Alert rule**.
-
-#### Task 2: Configure the condition
-
-1. Selected the alert scope.
-2. Filtered by the **Resource groups** resource type.
-3. Selected `rg-gp-monitoring-alerts`.
-4. Opened the **Condition** tab.
-5. Selected the **Delete resource group** Activity Log signal.
-6. Selected `Sev 2 - Warning`.
-7. Retained the remaining default signal settings.
+1. Open **Monitor** → **Alerts**.
+2. Select **Create** → **Alert rule**.
+3. Filter the scope by the **Resource groups** type.
+4. Select `rg-gp-monitoring-alerts`.
+5. Open **Condition**.
+6. Select the **Delete resource group** Activity Log signal.
+7. Select `Sev 2 - Warning`.
 
 **Validation:** The condition was configured to detect resource-group deletion events.
 
-#### Task 3: Attach the action group and create the rule
+### 2. Attach the Action Group and Create the Rule
 
-1. Opened the **Actions** tab.
-2. Selected `ag-gp-ops-email`.
-3. Opened the **Details** tab.
-4. Selected `rg-gp-monitoring-alerts`.
-5. Named the rule `ar-gp-activity-delete`.
-6. Confirmed `Sev 2 - Warning` as the severity.
-7. Confirmed that the rule was enabled upon creation.
-8. Reviewed and created the alert rule.
-9. Confirmed that both alert rules appeared in Azure Monitor.
+1. Open **Actions**.
+2. Select `ag-gp-ops-email`.
+3. Open **Details**.
+4. Select `rg-gp-monitoring-alerts`.
+5. Name the rule `ar-gp-activity-delete`.
+6. Confirm `Sev 2 - Warning`.
+7. Confirm the rule is enabled.
+8. Review and create the rule.
 
-**Validation:** `ar-gp-service-health` and `ar-gp-activity-delete` appeared in the alert-rule list.
+**Validation:** Both alert rules appeared in Azure Monitor.
 
-#### Task 4: Review the alert rules
+### 3. Review Both Rules
 
-The Service Health alert was reviewed to confirm that it:
+Confirm that the Service Health alert:
 
-- Monitored Service issue and Planned maintenance events.
-- Used `ag-gp-ops-email`.
-- Was enabled.
+- Monitors Service issue and Planned maintenance events.
+- Uses `ag-gp-ops-email`.
+- Is enabled.
 
-The Activity Log alert was reviewed to confirm that it:
+Confirm that the Activity Log alert:
 
-- Monitored the Delete resource group signal.
-- Used `ag-gp-ops-email`.
-- Used `Sev 2 - Warning` severity.
-- Was enabled.
+- Monitors the Delete resource group signal.
+- Uses `ag-gp-ops-email`.
+- Uses `Sev 2 - Warning`.
+- Is enabled.
 
-**Validation:** Both alert rules showed the intended conditions and action-group association.
-
----
-
-### Clean-Up and Verification
-
-Cleanup was performed in dependency order.
-
-#### Step 1: Delete the alert rules
-
-- Deleted `ar-gp-activity-delete`.
-- Deleted `ar-gp-service-health`.
-- Confirmed both deletions.
-
-#### Step 2: Delete the action group
-
-- Deleted `ag-gp-ops-email`.
-- Confirmed the deletion.
-
-#### Step 3: Delete the resource group
-
-- Deleted `rg-gp-monitoring-alerts`.
-- Confirmed the resource-group name when prompted.
-- Waited for the successful deletion notification.
-
-#### Step 4: Verify cleanup
-
-Confirmed that:
-
-- `rg-gp-monitoring-alerts` no longer appeared in Resource groups.
-- Neither alert rule appeared under **Monitor > Alerts > Alert rules**.
-- `ag-gp-ops-email` no longer appeared under **Monitor > Alerts > Action groups**.
+**Validation:** Both rules showed the intended conditions and action-group association.
 
 ---
 
-## Evidence and Analysis
+## 🧹 Exercise 4: Clean Up and Verify
 
-Place each screenshot directly beneath the task it proves. Every filename, Markdown link, caption, and section placement must match the screenshot's visible content.
+### 1. Delete the Alert Rules
 
-| Filename | Evidence Required | Analysis |
+Delete `ar-gp-activity-delete` and `ar-gp-service-health`.
+
+**Validation:** Neither alert rule remained in the alert-rule list.
+
+### 2. Delete the Action Group
+
+Delete `ag-gp-ops-email`.
+
+**Validation:** The action group no longer appeared in Azure Monitor.
+
+### 3. Delete the Resource Group
+
+Delete `rg-gp-monitoring-alerts` and confirm the resource-group name when prompted.
+
+**Validation:** The resource group no longer appeared under Resource groups.
+
+> [!WARNING]
+> Resource deletion can be permanent. Verify each selected object before confirming cleanup.
+
+---
+
+## 🖼️ Screenshot Evidence
+
+| Filename | Required Evidence | Placement |
 |---|---|---|
-| `Fig01 Monitoring Resource Group Created.png` | `rg-gp-monitoring-alerts` visible after creation | Confirms preparation of the project resource container |
-| `Fig02 Action Group Configuration.png` | Action group name, region, and notification configuration | Confirms creation of the reusable notification channel |
-| `Fig03 Action Group Test Success.png` | Test result displaying Success | Confirms successful processing of the sample notification |
-| `Fig04 Azure Test Email Notification.png` | Received Azure test notification with sensitive details redacted | Confirms end-to-end email delivery |
-| `Fig05 Service Health Review.png` | Relevant Service Health interface or reviewed areas | Demonstrates awareness of Azure platform-health information |
-| `Fig06 Service Health Alert Created.png` | Enabled `ar-gp-service-health` rule | Confirms creation of the platform-event alert |
-| `Fig07 Activity Log Delete Condition.png` | Delete resource group signal and selected scope | Confirms the intended administrative event condition |
-| `Fig08 Activity Log Alert Created.png` | Enabled `ar-gp-activity-delete` and severity | Confirms creation and classification of the deletion alert |
-| `Fig09 Alert Rules Validation.png` | Both alert rules visible | Confirms both monitoring scenarios were configured |
-| `Fig10 Alert Rule Details Reviewed.png` | Correct condition and action group | Confirms configuration review and validation |
-| `Fig11 Monitoring Cleanup Verified.png` | Project resources no longer visible | Confirms successful cleanup |
-
-Example image placement:
+| `Fig01 Monitoring Resource Group Created.png` | Monitoring resource group | Exercise 1, Prepare the Environment |
+| `Fig02 Action Group Configuration.png` | Action group and notification settings | Exercise 1, Create the Action Group |
+| `Fig03 Action Group Test Success.png` | Successful action-group test | Exercise 1, Test the Action Group |
+| `Fig04 Azure Test Email Notification.png` | Received test notification with sensitive data redacted | Exercise 1, Test the Action Group |
+| `Fig05 Service Health Review.png` | Service Health areas reviewed | Exercise 2, Review Service Health |
+| `Fig06 Service Health Alert Created.png` | Enabled Service Health alert | Exercise 2, Configure the Alert |
+| `Fig07 Activity Log Delete Condition.png` | Deletion signal and scope | Exercise 3, Configure Scope and Condition |
+| `Fig08 Activity Log Alert Created.png` | Enabled deletion alert and severity | Exercise 3, Create the Rule |
+| `Fig09 Alert Rules Validation.png` | Both rules visible | Exercise 3, Review Both Rules |
+| `Fig10 Alert Rule Details Reviewed.png` | Correct condition and action group | Exercise 3, Review Both Rules |
+| `Fig11 Monitoring Cleanup Verified.png` | Final cleanup evidence | Exercise 4, Clean Up and Verify |
 
 ```markdown
 ![Fig03 Action Group Test Success](screenshots/Fig03%20Action%20Group%20Test%20Success.png)
@@ -362,113 +308,200 @@ Example image placement:
 *Figure 3: Azure Monitor displays a successful test for the configured action group.*
 ```
 
-> Do not add a screenshot unless it clearly matches the assigned task. Redact usernames, email addresses, subscription IDs, tenant details, access tokens, and other sensitive information before publication.
+> [!IMPORTANT]
+> Include only screenshots that visibly prove the assigned task. Ensure each filename, Markdown link, caption, and placement matches its image exactly.
 
 ---
 
-## Project Results
+## ✅ Validation Results
 
-The project achieved the intended monitoring outcomes:
-
-- A dedicated monitoring resource group was created.
-- A reusable email action group was configured and tested.
-- The action-group test displayed a successful status.
-- The Azure test email was received.
-- A Service Health alert was configured for service incidents and planned maintenance.
-- An Activity Log alert was configured for resource-group deletion events.
-- Both alert rules used the same tested action group.
-- The conditions, severity, action group, and enabled state were reviewed.
-- All project resources were deleted and cleanup was verified.
-
----
-
-## Validation Checklist
-
-| Validation Item | Expected Result | Status |
-|---|---|---|
-| Resource group created | `rg-gp-monitoring-alerts` available | Completed |
-| Action group created | `ag-gp-ops-email` available | Completed |
-| Email notification configured | `ops-team-email` attached | Completed |
-| Action group tested | Test status displayed Success | Completed |
-| Test email received | Azure test notification received | Completed |
-| Service Health reviewed | Four required areas reviewed | Completed |
-| Service Health alert created | Rule created and enabled | Completed |
-| Service Health events verified | Service issue and Planned maintenance selected | Completed |
-| Activity Log scope configured | Project resource group selected | Completed |
-| Deletion signal configured | Delete resource group selected | Completed |
-| Activity Log alert created | Rule created and enabled | Completed |
-| Severity verified | `Sev 2 - Warning` configured | Completed |
-| Action-group association verified | Both rules used `ag-gp-ops-email` | Completed |
-| Alert rules deleted | Neither rule remained | Completed |
-| Action group deleted | Action group no longer appeared | Completed |
-| Resource group deleted | Resource group no longer appeared | Completed |
+| Check | Result |
+|---|---|
+| Monitoring resource group created | ✅ Passed |
+| Action group created | ✅ Passed |
+| Email notification configured | ✅ Passed |
+| Action group test succeeded | ✅ Passed |
+| Azure test email received | ✅ Passed |
+| Service Health areas reviewed | ✅ Passed |
+| Service Health alert created | ✅ Passed |
+| Service issue selected | ✅ Passed |
+| Planned maintenance selected | ✅ Passed |
+| Activity Log scope configured | ✅ Passed |
+| Delete resource group signal selected | ✅ Passed |
+| Activity Log alert created | ✅ Passed |
+| `Sev 2 - Warning` configured | ✅ Passed |
+| Both rules used the action group | ✅ Passed |
+| Both rules were enabled | ✅ Passed |
+| Alert rules deleted | ✅ Passed |
+| Action group deleted | ✅ Passed |
+| Resource group deleted | ✅ Passed |
+| Final cleanup verified | ✅ Passed |
 
 ---
 
-## Limitations and Next Steps
+## 📚 Command Reference
 
-This assignment implemented a focused monitoring baseline in a temporary training environment. Potential future enhancements include:
+This assignment was completed through the Azure portal.
 
-- Add multiple approved notification recipients.
-- Define a documented alert-severity and escalation matrix.
-- Monitor additional high-impact administrative events.
-- Deploy action groups and alert rules through infrastructure as code.
-- Apply standardized naming, tagging, and ownership controls.
-- Connect alerts to an approved incident-management process.
-- Test notification channels periodically.
-- Document response procedures for each monitored event.
-- Review alert coverage as the Azure environment changes.
+| Goal | Azure Portal Path |
+|---|---|
+| Create the resource group | **Resource groups** → **Create** |
+| Create an action group | **Monitor** → **Alerts** → **Action groups** → **Create** |
+| Test an action group | Action group → **Test action group** |
+| Review Service Health | **Service Health** |
+| Create a Service Health alert | **Service Health** → **Create service health alert** |
+| Create an Activity Log alert | **Monitor** → **Alerts** → **Create** → **Alert rule** |
+| Review alert rules | **Monitor** → **Alerts** → **Alert rules** |
+| Delete the action group | **Monitor** → **Alerts** → **Action groups** |
+| Delete the project | Resource group → **Delete resource group** |
 
-These are recommended extensions and were not part of the completed guided-lab scope.
+### Repository Structure
 
----
-
-## Security and Operational Notes
-
-- Authentication credentials and access tokens are excluded from this repository.
-- The notification channel was tested before operational use.
-- One reusable action group supported both alert rules.
-- Alert scope and signal selection were validated.
-- The deletion alert used an explicit warning severity.
-- Both alert rules were enabled and reviewed.
-- Temporary resources were removed after the lab.
-- Screenshots must be checked and redacted before publication.
-
-In a production environment, notification ownership, escalation paths, severity mappings, alert scope, naming conventions, and incident-response procedures should follow approved organizational standards.
-
----
-
-## Conclusion
-
-This completed project established a practical Azure monitoring baseline using a tested action group, a Service Health alert, and an Activity Log alert. The solution connected Azure platform and administrative events to a reusable email notification channel, improving awareness of service issues, planned maintenance, and resource-group deletion activity.
-
-The project also reinforced essential cloud-operational practices: test notification delivery, validate alert scope and conditions, assign meaningful severity, protect sensitive information, and remove temporary resources after use.
+```text
+azure-monitoring-alerts/
+├── README.md
+├── screenshots/
+│   ├── Fig01 Monitoring Resource Group Created.png
+│   ├── Fig02 Action Group Configuration.png
+│   ├── Fig03 Action Group Test Success.png
+│   ├── Fig04 Azure Test Email Notification.png
+│   ├── Fig05 Service Health Review.png
+│   ├── Fig06 Service Health Alert Created.png
+│   ├── Fig07 Activity Log Delete Condition.png
+│   ├── Fig08 Activity Log Alert Created.png
+│   ├── Fig09 Alert Rules Validation.png
+│   ├── Fig10 Alert Rule Details Reviewed.png
+│   └── Fig11 Monitoring Cleanup Verified.png
+└── LICENSE
+```
 
 ---
 
-## Disclaimer
+## 🧰 Troubleshooting
 
-This repository documents a completed educational assignment performed in a temporary Skillable Microsoft Azure environment. Resource names, alert rules, severity settings, regions, and notification settings were used for training and may require modification before use in another subscription or production environment.
+### The test email is not received
 
-No passwords, Temporary Access Pass tokens, usernames, email addresses, subscription identifiers, tenant details, or authentication secrets are included. Screenshots should be reviewed and redacted before publication.
+- Confirm the email address is correct.
+- Review the action-group test result.
+- Check the mailbox's junk or filtered folders.
+- Confirm the email notification is enabled.
 
-Microsoft Azure and related product names are trademarks of Microsoft Corporation. This project is an independent educational portfolio entry and is not an official Microsoft deployment guide.
+### The Service Health alert cannot use the action group
+
+Confirm that the action group region is **Global** and that the signed-in identity can read the action group.
+
+### The deletion signal is unavailable
+
+Confirm that the alert scope is a resource group and search the available Activity Log signals for **Delete resource group**.
+
+### Both alert rules do not appear
+
+Verify the active subscription and selected resource group. Refresh the Alert rules view after creation.
+
+### The alert rule is disabled
+
+Open the rule details, review its state, and enable it if the lab requires the rule to be active.
+
+### Cleanup appears incomplete
+
+Independently check Alert rules, Action groups, and Resource groups in the active subscription.
 
 ---
 
-## Author
+## 🧠 Skills Demonstrated
+
+- Azure Monitor administration
+- Azure resource-group management
+- Action-group creation and testing
+- Email notification configuration
+- Azure Service Health review
+- Service Health alert creation
+- Activity Log signal selection
+- Alert scope configuration
+- Alert severity classification
+- Reusable notification design
+- Alert-rule validation
+- Monitoring cleanup and verification
+- Professional technical documentation
+
+---
+
+## 💡 Key Takeaways
+
+1. **Reusable action groups simplify notification management.** One tested notification channel supported both alert rules.
+2. **Notification paths should be tested before operational use.** The successful test and received email validated delivery.
+3. **Service Health alerts improve platform awareness.** The rule covered service issues and planned maintenance.
+4. **Activity Log alerts provide visibility into administrative actions.** The deletion rule targeted a high-impact management event.
+5. **Scope, condition, action, severity, and state all require review.** A rule is only useful when its complete configuration matches the monitoring objective.
+6. **Severity communicates operational importance.** The deletion event used `Sev 2 - Warning` as required by the lab.
+7. **Cleanup completes the monitoring lifecycle.** Rules, notification resources, and the project resource group were removed and verified.
+
+---
+
+## ☑️ Completion Checklist
+
+- [x] Created `rg-gp-monitoring-alerts`
+- [x] Created `ag-gp-ops-email`
+- [x] Configured `OpsEmail`
+- [x] Added `ops-team-email`
+- [x] Tested the action group
+- [x] Confirmed successful email delivery
+- [x] Reviewed Service Health
+- [x] Created `ar-gp-service-health`
+- [x] Selected Service issue
+- [x] Selected Planned maintenance
+- [x] Created `ar-gp-activity-delete`
+- [x] Selected Delete resource group
+- [x] Configured `Sev 2 - Warning`
+- [x] Attached the reusable action group to both rules
+- [x] Confirmed both rules were enabled
+- [x] Reviewed both rules
+- [x] Deleted both alert rules
+- [x] Deleted the action group
+- [x] Deleted the resource group
+- [x] Confirmed cleanup
+
+---
+
+## 👤 Author
 
 **Wadondera A. Collins**  
-ICDFA Trainee | Cohort 11  
-Cloud Security Engineering  
-Focus Areas: Microsoft Azure, Cloud Security, Monitoring, Governance, Identity, and DevOps
+ICDFA Trainee | Cohort 11 | Cloud Security Engineering
+
+This project forms part of my practical Azure monitoring and cloud-security portfolio, demonstrating reusable notifications, platform-health awareness, administrative-event detection, validation, and responsible cleanup.
+
+---
+
+## 🙏 Acknowledgements
+
+This guided project was completed as part of the **Mentor Pilot Program** in a Skillable Azure environment. Mentor supported the learning experience through lab navigation, instruction comprehension, and troubleshooting.
+
+Official reference material:
+
+- [Create and manage Azure Monitor action groups](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups)
+- [Create activity log and Service Health alert rules](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-create-activity-log-alert-rule)
+- [Create Service Health alerts](https://learn.microsoft.com/en-us/azure/service-health/alerts-activity-log-service-notifications-portal)
+- [Monitor Azure with Service Health and Activity Log alerts](https://learn.microsoft.com/en-us/training/modules/guided-project-monitor-service-health-activity-alerts/)
+
+---
+
+## ⚖️ Disclaimer
+
+This repository documents a completed educational assignment performed in a temporary Skillable Microsoft Azure environment. It is not a production-ready monitoring design and does not replace official Microsoft documentation, organizational monitoring standards, or professional security guidance. Resource names, alert conditions, severity mappings, notification recipients, regions, and escalation procedures require review before reuse.
+
+Passwords, Temporary Access Pass codes, usernames, email addresses, subscription identifiers, tenant information, access tokens, and authentication secrets are intentionally excluded. Screenshots must be reviewed and redacted before publication. Azure services, interfaces, roles, limits, and features may change over time.
 
 ---
 
 <div align="center">
 
-**Completed on September 30, 2026**
+### 🎉 Lab Completed Successfully
 
-*Building secure, observable, and resilient cloud environments through practical implementation.*
+**Azure monitoring: configured, tested, connected, validated, and responsibly removed.**
+
+Made with curiosity, care, and a commitment to secure, observable, and resilient cloud engineering.  
+
+**Wadondera A. Collins**  
+*ICDFA Trainee | Cohort 11 | Cloud Security Engineering*
 
 </div>
