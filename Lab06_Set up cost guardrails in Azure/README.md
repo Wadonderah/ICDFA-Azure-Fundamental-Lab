@@ -1,97 +1,437 @@
 <div align="center">
 
-# Azure Cost Governance with Tags, Budgets, and Policy
+# 💰 Azure Cost Governance: Tags, Budgets, and Policy
 
-### A Practical Azure Governance Lab for Cost Visibility, Spending Control, and Regional Compliance
+### Mentor Pilot Program | Completed Assignment
 
 **Author:** Wadondera A. Collins  
 **Role:** ICDFA Trainee | Cohort 11 | Cloud Security Engineering  
-**Completion Date:** September 30, 2026  
-**Platform:** Microsoft Azure | Skillable Lab Environment  
-**Status:** Completed
+**Completion Date:** September 30, 2026
+
+[![Azure](https://img.shields.io/badge/Microsoft%20Azure-Governance-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
+[![FinOps](https://img.shields.io/badge/Focus-Cost%20Governance-00A4EF)](#-skills-demonstrated)
+[![Status](https://img.shields.io/badge/Status-Completed-2EA44F)](#-completion-checklist)
+[![Policy](https://img.shields.io/badge/Azure%20Policy-Allowed%20Locations-6F42C1)](#-exercise-3-assign-and-test-azure-policy)
+
+*A practical Azure governance lab covering cost-tracking tags, monthly budgets, alert thresholds, regional policy enforcement, compliance validation, and responsible cleanup.*
 
 </div>
 
 ---
 
-## Table of Contents
+## 📖 Table of Contents
 
-- [Project Overview](#project-overview)
-- [Executive Summary](#executive-summary)
-- [Project Objectives](#project-objectives)
-- [Professional Value](#professional-value)
-- [Skills Demonstrated](#skills-demonstrated)
-- [Technologies and Services](#technologies-and-services)
-- [Lab Environment](#lab-environment)
-- [Architecture and Governance Flow](#architecture-and-governance-flow)
-- [Implementation](#implementation)
-  - [Exercise 1: Apply Cost-Tracking Tags](#exercise-1-apply-cost-tracking-tags)
-  - [Exercise 2: Create a Budget and Alerts](#exercise-2-create-a-budget-and-alerts)
-  - [Exercise 3: Assign and Test Azure Policy](#exercise-3-assign-and-test-azure-policy)
-  - [Clean-Up and Verification](#clean-up-and-verification)
-- [Validation Checklist](#validation-checklist)
-- [Suggested Screenshot Evidence](#suggested-screenshot-evidence)
-- [Results](#results)
-- [Security and Governance Considerations](#security-and-governance-considerations)
-- [Challenges and Lessons Learned](#challenges-and-lessons-learned)
-- [Limitations and Next Steps](#limitations-and-next-steps)
-- [Repository Structure](#repository-structure)
-- [Conclusion](#conclusion)
-- [Disclaimer](#disclaimer)
-- [Author](#author)
+- [Project Overview](#-project-overview)
+- [Learning Objectives](#-learning-objectives)
+- [Architecture and Resources](#-architecture-and-resources)
+- [Prerequisites and Security](#-prerequisites-and-security)
+- [Exercise 1: Apply Cost-Tracking Tags](#-exercise-1-apply-cost-tracking-tags)
+- [Exercise 2: Create a Budget and Alerts](#-exercise-2-create-a-budget-and-alerts)
+- [Exercise 3: Assign and Test Azure Policy](#-exercise-3-assign-and-test-azure-policy)
+- [Exercise 4: Clean Up and Verify](#-exercise-4-clean-up-and-verify)
+- [Screenshot Evidence](#-screenshot-evidence)
+- [Validation Results](#-validation-results)
+- [Command Reference](#-command-reference)
+- [Troubleshooting](#-troubleshooting)
+- [Skills Demonstrated](#-skills-demonstrated)
+- [Key Takeaways](#-key-takeaways)
+- [Completion Checklist](#-completion-checklist)
+- [Author](#-author)
+- [Acknowledgements](#-acknowledgements)
+- [Disclaimer](#-disclaimer)
 
 ---
 
-## Project Overview
+## 🚀 Project Overview
 
-This project demonstrates the implementation of foundational cost-governance controls in Microsoft Azure. The completed lab combines resource tagging, budget monitoring, cost alerts, and Azure Policy to improve accountability, spending awareness, and deployment compliance.
+This repository documents the successful completion of the **Azure Cost Governance with Tags, Budgets, and Policy** lab in the **Mentor Pilot Program**. The project combined resource metadata, financial monitoring, and preventive governance within a dedicated Azure resource-group scope.
 
-The solution was implemented around a dedicated resource group named `rg-gp-cost-guardrails`. Resources were organized with cost-tracking tags, monitored through a monthly budget, and governed by an **Allowed locations** policy. Policy enforcement was then tested by attempting deployments in both prohibited and permitted Azure regions.
+The solution used `environment` and `owner` tags to establish cost and ownership context, a monthly Azure Cost Management budget to provide alerts at 80% and 100%, and the built-in **Allowed locations** policy to restrict resource deployment to an approved Azure region.
+
+The project covered the following workflow:
+
+1. Create a dedicated governance resource group.
+2. Deploy a cost-conscious test storage account.
+3. Apply matching ownership and environment tags.
+4. Create a monthly budget with two alert thresholds.
+5. Assign the **Allowed locations** policy at resource-group scope.
+6. Test a deployment in a prohibited region.
+7. Test a deployment in the approved region.
+8. Review policy compliance information.
+9. Remove the policy assignment, budget, resources, and test objects.
+10. Verify final cleanup.
+
+> [!NOTE]
+> Mentor was available throughout the lab as an AI-powered assistant for navigating instructions and troubleshooting exercises.
 
 ---
 
-## Executive Summary
+## 🎯 Learning Objectives
 
-Cloud governance requires more than deploying resources successfully. Organizations also need reliable methods to identify resource ownership, track spending, receive early cost warnings, and restrict deployments that do not meet operational requirements.
+By completing this lab, I demonstrated the ability to:
 
-In this lab, I built a small Azure governance baseline with three complementary controls:
-
-1. **Resource tags** provided ownership and environment context for reporting and filtering.
-2. **Azure Cost Management budgets** introduced proactive alerts at 80% and 100% of the configured monthly amount.
-3. **Azure Policy** restricted resource deployment to an approved Azure region and demonstrated preventive governance through an enforced denial.
-
-The lab concluded with the removal of the policy assignment, budget, resource group, storage accounts, and test resources to prevent unnecessary charges.
-
----
-
-## Project Objectives
-
-- Create a dedicated Azure resource group for the governance lab.
-- Deploy a test storage account using cost-conscious configuration options.
-- Apply consistent `environment` and `owner` tags to Azure resources.
-- Create a monthly budget with actionable alert thresholds.
-- Assign an Azure Policy at the resource-group scope.
-- Test policy behavior in disallowed and allowed Azure regions.
+- Create and manage an isolated Azure resource group.
+- Deploy a Standard LRS storage account.
+- Apply consistent resource tags for ownership and environment classification.
+- Configure an Azure Cost Management budget.
+- Configure actual-cost alerts at 80% and 100%.
+- Assign a built-in Azure Policy at resource-group scope.
+- Configure an approved Azure location as a policy parameter.
+- Validate policy denial in a prohibited region.
+- Validate successful deployment in an approved region.
 - Review policy compliance information.
-- Remove all lab resources and verify successful cleanup.
+- Remove governance objects and billable resources responsibly.
 
 ---
 
-## Professional Value
+## 🏗️ Architecture and Resources
 
-This project reflects practical responsibilities commonly associated with cloud administration, Cloud Security Engineering, FinOps, and governance roles. It demonstrates the ability to combine visibility, financial control, and policy enforcement rather than managing each area in isolation.
+```text
+Azure Subscription
+├── Cost Management
+│   └── Budget: gp-pilot-budget
+│       ├── Actual-cost alert: 80%
+│       └── Actual-cost alert: 100%
+│
+└── Resource Group: rg-gp-cost-guardrails
+    ├── Tags
+    │   ├── environment = pilot
+    │   └── owner = it-team
+    ├── Storage Account: stgpcostguard65711345
+    │   ├── Performance: Standard
+    │   ├── Redundancy: LRS
+    │   └── Matching governance tags
+    └── Policy Assignment: Allowed locations
+        ├── Disallowed region: Denied
+        └── Approved region: Permitted
+```
 
-The completed work supports the following professional outcomes:
+| Resource or Control | Name or Configuration | Purpose |
+|---|---|---|
+| Resource group | `rg-gp-cost-guardrails` | Lab boundary and policy scope |
+| Storage account | `stgpcostguard65711345` | Test workload for tags and policy validation |
+| Resource tags | `environment=pilot`, `owner=it-team` | Ownership and environment classification |
+| Budget | `gp-pilot-budget` | Monthly spending visibility |
+| Budget amount | `10` in the applicable billing currency | Test spending threshold |
+| Alerts | 80% and 100% actual cost | Early and full-threshold notification |
+| Policy definition | `Allowed locations` | Regional deployment restriction |
+| Storage configuration | Standard, LRS | Cost-conscious test configuration |
 
-- Better resource ownership and cost attribution
-- Earlier awareness of unexpected cloud spending
-- Standardized regional deployment requirements
-- Reduced risk of unmanaged or noncompliant resources
-- Documented validation and responsible resource cleanup
+> [!NOTE]
+> **Final state:** The policy assignment, budget, resource group, storage accounts, and test resources were removed after validation.
 
 ---
 
-## Skills Demonstrated
+## 🔐 Prerequisites and Security
+
+### Prerequisites
+
+- Access to the [Azure portal](https://portal.azure.com/)
+- An authorized Skillable Azure lab subscription
+- Permission to create resource groups and storage accounts
+- Permission to create budgets at the selected scope
+- Permission to assign Azure Policy at resource-group scope
+- An authorized email address for budget notifications
+
+### Tools and Environment
+
+| Tool or Service | Version or Status | Purpose |
+|---|---|---|
+| Microsoft Azure portal | Version not provided | Resource, cost, and policy administration |
+| Azure Resource Groups | Managed Azure service | Project boundary and policy scope |
+| Azure Storage | API version not recorded | Test workload |
+| Azure Tags | Managed Azure feature | Ownership and environment metadata |
+| Azure Cost Management | Managed Azure service | Budget and alert configuration |
+| Azure Policy | Managed Azure service | Regional policy enforcement |
+| Skillable Lab Environment | Version not provided | Guided educational subscription |
+
+> [!NOTE]
+> Exact Azure service versions were not displayed in the lab instructions. The configuration is documented without unsupported version estimates.
+
+### Security Notice
+
+Passwords, Temporary Access Pass codes, authentication secrets, subscription identifiers, tenant information, and private account details are intentionally **not included**.
+
+> [!CAUTION]
+> Review screenshots before publication and redact email addresses, subscription IDs, tenant IDs, access tokens, and other sensitive values.
+
+---
+
+## 🏷️ Exercise 1: Apply Cost-Tracking Tags
+
+### 1. Prepare the Environment
+
+1. Open **Resource groups** in the Azure portal.
+2. Create:
+
+```text
+rg-gp-cost-guardrails
+```
+
+3. Select the assigned subscription and lab region.
+4. Record the authorized email address for budget notifications without publishing it.
+
+**Validation:** The resource group appeared in the Azure portal.
+
+### 2. Create the Test Storage Account
+
+Configure the storage account with the following values:
+
+| Setting | Value |
+|---|---|
+| Resource group | `rg-gp-cost-guardrails` |
+| Storage account | `stgpcostguard65711345` |
+| Region | Same region as the resource group |
+| Performance | Standard |
+| Redundancy | Locally-redundant storage (LRS) |
+
+**Validation:** The storage account deployed successfully.
+
+### 3. Tag the Resource Group
+
+Apply the following tags:
+
+| Tag | Value |
+|---|---|
+| `environment` | `pilot` |
+| `owner` | `it-team` |
+
+**Validation:** Both tags appeared on `rg-gp-cost-guardrails`.
+
+### 4. Tag the Storage Account
+
+Apply the same tags to `stgpcostguard65711345`.
+
+**Validation:** The storage account displayed matching `environment` and `owner` tags.
+
+> [!TIP]
+> A tagging model is most useful when approved keys and values are applied consistently across related resources.
+
+---
+
+## 💳 Exercise 2: Create a Budget and Alerts
+
+### 1. Open Cost Management
+
+1. Search for **Cost Management**.
+2. Open **Budgets** under Monitoring.
+3. Select **Add**.
+4. Confirm the intended budget scope.
+
+### 2. Configure the Monthly Budget
+
+| Setting | Value |
+|---|---|
+| Name | `gp-pilot-budget` |
+| Reset period | Monthly |
+| Test amount | `10` in the applicable billing currency |
+| First alert | Actual cost at 80% |
+| Second alert | Actual cost at 100% |
+| Recipient | Authorized project email address |
+
+**Validation:** `gp-pilot-budget` appeared in the budget list with both alert thresholds.
+
+> [!IMPORTANT]
+> Budget alerts provide cost awareness. They should be paired with an operational response process that defines ownership and follow-up actions.
+
+---
+
+## 🛡️ Exercise 3: Assign and Test Azure Policy
+
+### 1. Assign the Allowed Locations Policy
+
+1. Open **Policy** in the Azure portal.
+2. Select **Definitions**.
+3. Search for **Allowed locations**.
+4. Start a new assignment.
+5. Set the scope to `rg-gp-cost-guardrails`.
+6. Select the approved Azure region.
+7. Review and create the assignment.
+
+**Validation:** The policy appeared as an assignment scoped to the project resource group.
+
+### 2. Test a Disallowed Region
+
+1. Start a temporary storage-account deployment in `rg-gp-cost-guardrails`.
+2. Select a region not included in the allowed-locations parameter.
+3. Run validation.
+
+**Validation:** Azure Policy denied the deployment in the prohibited region.
+
+### 3. Test the Approved Region
+
+1. Change the temporary storage account to the approved location.
+2. Run validation again.
+3. Create the resource after validation succeeds.
+
+**Validation:** Validation passed and deployment was permitted in the approved region.
+
+### 4. Review Compliance
+
+1. Open **Policy**.
+2. Select **Compliance**.
+3. Locate the **Allowed locations** assignment.
+4. Review its compliance information and evaluated resources.
+
+**Validation:** The compliance view displayed the assignment and its evaluated resources.
+
+---
+
+## 🧹 Exercise 4: Clean Up and Verify
+
+### 1. Remove the Policy Assignment
+
+Delete the **Allowed locations** assignment before removing the resource group.
+
+**Validation:** The assignment no longer appeared under Policy assignments.
+
+### 2. Delete the Budget
+
+Delete `gp-pilot-budget` from Azure Cost Management.
+
+**Validation:** The budget no longer appeared under Budgets.
+
+### 3. Delete the Resource Group
+
+Delete `rg-gp-cost-guardrails`. This removes the storage accounts and contained test resources.
+
+**Validation:** The resource group no longer appeared in the resource-group list.
+
+> [!WARNING]
+> Resource-group deletion permanently removes contained resources. Verify the selected resource group before confirming deletion.
+
+---
+
+## 🖼️ Screenshot Evidence
+
+Add only screenshots whose visible content proves the matching task. Keep filenames, links, captions, and placement synchronized.
+
+| Filename | Required Evidence | Placement |
+|---|---|---|
+| `Fig01 Resource Group Created.png` | Project resource group created | Exercise 1, Prepare the Environment |
+| `Fig02 Storage Account Deployment.png` | Successful storage deployment | Exercise 1, Create the Test Storage Account |
+| `Fig03 Resource Group Tags.png` | Resource-group tag values | Exercise 1, Tag the Resource Group |
+| `Fig04 Storage Account Tags.png` | Matching storage tags | Exercise 1, Tag the Storage Account |
+| `Fig05 Budget Configuration.png` | Budget name and amount | Exercise 2, Configure the Monthly Budget |
+| `Fig06 Budget Alert Thresholds.png` | 80% and 100% alerts | Exercise 2, Configure the Monthly Budget |
+| `Fig07 Allowed Locations Assignment.png` | Policy and scope | Exercise 3, Assign the Policy |
+| `Fig08 Policy Denied Deployment.png` | Denial in prohibited region | Exercise 3, Test a Disallowed Region |
+| `Fig09 Allowed Region Validation.png` | Successful approved-region validation | Exercise 3, Test the Approved Region |
+| `Fig10 Policy Compliance Status.png` | Assignment compliance details | Exercise 3, Review Compliance |
+| `Fig11 Cleanup Verification.png` | Final removal evidence | Exercise 4, Clean Up and Verify |
+
+Example:
+
+```markdown
+![Fig01 Resource Group Created](screenshots/Fig01%20Resource%20Group%20Created.png)
+
+*Figure 1: The Azure portal displays the successfully created project resource group.*
+```
+
+> [!IMPORTANT]
+> Do not attach a screenshot unless it visibly proves the task. Redact sensitive values before publication.
+
+---
+
+## ✅ Validation Results
+
+| Check | Result |
+|---|---|
+| Resource group created | ✅ Passed |
+| Test storage account created | ✅ Passed |
+| Resource-group tags applied | ✅ Passed |
+| Storage-account tags applied | ✅ Passed |
+| Monthly budget created | ✅ Passed |
+| 80% actual-cost alert configured | ✅ Passed |
+| 100% actual-cost alert configured | ✅ Passed |
+| Allowed locations policy assigned | ✅ Passed |
+| Assignment scoped to resource group | ✅ Passed |
+| Disallowed-region deployment denied | ✅ Passed |
+| Approved-region validation passed | ✅ Passed |
+| Policy compliance reviewed | ✅ Passed |
+| Policy assignment removed | ✅ Passed |
+| Budget removed | ✅ Passed |
+| Resource group removed | ✅ Passed |
+| Final cleanup verified | ✅ Passed |
+
+---
+
+## 📚 Command Reference
+
+This assignment was completed through the Azure portal.
+
+| Goal | Azure Portal Path |
+|---|---|
+| Create the resource group | **Resource groups** → **Create** |
+| Create the storage account | **Storage accounts** → **Create** |
+| Apply tags | Resource → **Tags** |
+| Create the budget | **Cost Management** → **Budgets** → **Add** |
+| Find the policy | **Policy** → **Definitions** → **Allowed locations** |
+| Assign the policy | Policy definition → **Assign** |
+| Review compliance | **Policy** → **Compliance** |
+| Remove the assignment | **Policy** → **Assignments** → **Delete assignment** |
+| Delete the budget | **Cost Management** → **Budgets** → Select budget → **Delete** |
+| Delete the project | Resource group → **Delete resource group** |
+
+### Repository Structure
+
+```text
+azure-cost-governance/
+├── README.md
+├── screenshots/
+│   ├── Fig01 Resource Group Created.png
+│   ├── Fig02 Storage Account Deployment.png
+│   ├── Fig03 Resource Group Tags.png
+│   ├── Fig04 Storage Account Tags.png
+│   ├── Fig05 Budget Configuration.png
+│   ├── Fig06 Budget Alert Thresholds.png
+│   ├── Fig07 Allowed Locations Assignment.png
+│   ├── Fig08 Policy Denied Deployment.png
+│   ├── Fig09 Allowed Region Validation.png
+│   ├── Fig10 Policy Compliance Status.png
+│   └── Fig11 Cleanup Verification.png
+└── LICENSE
+```
+
+---
+
+## 🧰 Troubleshooting
+
+### The budget controls are unavailable
+
+Confirm the active subscription and cost-management scope. Verify that the signed-in identity can view and manage budgets at that scope.
+
+### Budget alerts do not trigger immediately
+
+Confirm the budget amount, reset period, alert conditions, and recipient. Cost data and alert evaluation are not the same as real-time resource enforcement.
+
+### The policy assignment does not appear
+
+Verify the active subscription, assignment scope, and policy definition. Refresh the Policy assignments view if the assignment was recently created.
+
+### A prohibited deployment is not denied
+
+Confirm that the deployment's resource location is outside the configured allowed list and that the assignment is scoped to the target resource group.
+
+### An approved deployment is denied
+
+Confirm the exact allowed-location parameter and the resource's selected location. Review the validation details for other policy assignments that may also apply.
+
+### Compliance information is incomplete
+
+Confirm the assignment scope and refresh the compliance view. Policy evaluation and compliance reporting may not appear immediately after assignment or deployment.
+
+### Tags appear on the resource group but not the resource
+
+Tags do not automatically transfer in every scenario. Apply the required tags directly or use an approved Azure Policy-based inheritance design.
+
+### Cleanup appears incomplete
+
+Verify the active subscription and independently check Policy assignments, Budgets, and Resource groups.
+
+---
+
+## 🧠 Skills Demonstrated
 
 - Azure resource-group administration
 - Azure Storage account deployment
@@ -103,389 +443,87 @@ The completed work supports the following professional outcomes:
 - Preventive control testing
 - Policy compliance review
 - Cloud cost-awareness practices
-- Azure resource cleanup and validation
-- Technical documentation for a professional portfolio
+- Governance cleanup and validation
+- Professional technical documentation
 
 ---
 
-## Technologies and Services
+## 💡 Key Takeaways
 
-| Technology or Service | Purpose in the Project |
-|---|---|
-| Microsoft Azure Portal | Primary interface used to configure and validate resources |
-| Azure Resource Groups | Logical boundary for the lab resources and policy scope |
-| Azure Storage Account | Test workload used for tagging and policy validation |
-| Azure Tags | Metadata used for ownership and environment classification |
-| Azure Cost Management | Service used to create the monthly budget and alerts |
-| Azure Budgets | Spending threshold monitoring at 80% and 100% |
-| Azure Policy | Governance control used to restrict allowed deployment locations |
-| Skillable Lab Environment | Guided educational environment used to complete the project |
-
-> Exact Azure service versions were not displayed in the supplied lab instructions. Azure services are continuously managed cloud services, so this README records the configuration used rather than assigning unsupported product version numbers.
+1. **Tags improve visibility when applied consistently.** Matching metadata supports ownership, filtering, reporting, and cost attribution.
+2. **Budgets provide early spending awareness.** The 80% and 100% thresholds created clear monitoring points.
+3. **Budget alerts are controls for awareness, not automatic shutdown.** Operational owners still need defined response procedures.
+4. **Policy scope determines impact.** Resource-group scope limited enforcement to the lab boundary.
+5. **Azure Policy can provide preventive governance.** The prohibited-region test demonstrated an enforced denial.
+6. **Positive and negative testing strengthen validation.** Both denied and permitted deployments were tested.
+7. **Compliance review supplements deployment testing.** The dashboard provided a governance view of evaluated resources.
+8. **Cleanup is part of cost governance.** Removing budgets, assignments, and resources reduced the risk of lingering charges or controls.
 
 ---
 
-## Lab Environment
+## ☑️ Completion Checklist
 
-| Item | Configuration |
-|---|---|
-| Environment | Skillable guided lab |
-| Azure interface | Azure Portal |
-| Resource group | `rg-gp-cost-guardrails` |
-| Primary storage account | `stgpcostguard65711345` |
-| Budget name | `gp-pilot-budget` |
-| Budget reset period | Monthly |
-| Test budget amount | 10 in the subscription billing currency |
-| Alert thresholds | 80% and 100% |
-| Policy definition | Allowed locations |
-| Policy scope | `rg-gp-cost-guardrails` |
-| Resource tags | `environment: pilot`, `owner: it-team` |
-| Storage performance | Standard |
-| Storage redundancy | Locally-redundant storage (LRS) |
-
-> **Credential protection:** Lab passwords, Temporary Access Pass tokens, and other sign-in secrets are intentionally excluded from this repository.
-
----
-
-## Architecture and Governance Flow
-
-```text
-Azure Subscription
-|
-+-- Cost Management
-|   +-- Monthly Budget: gp-pilot-budget
-|       +-- Actual-cost alert at 80%
-|       +-- Actual-cost alert at 100%
-|
-+-- Resource Group: rg-gp-cost-guardrails
-    |
-    +-- Tags
-    |   +-- environment = pilot
-    |   +-- owner = it-team
-    |
-    +-- Storage Account
-    |   +-- Standard performance
-    |   +-- LRS redundancy
-    |   +-- Matching governance tags
-    |
-    +-- Azure Policy Assignment
-        +-- Allowed locations
-        +-- Denies disallowed regional deployments
-        +-- Permits deployment in the configured region
-```
-
-This layered design combines organizational metadata, financial monitoring, and compliance enforcement within one controlled lab scope.
+- [x] Created `rg-gp-cost-guardrails`
+- [x] Created `stgpcostguard65711345`
+- [x] Applied `environment=pilot`
+- [x] Applied `owner=it-team`
+- [x] Created `gp-pilot-budget`
+- [x] Configured the monthly reset period
+- [x] Configured the 80% alert
+- [x] Configured the 100% alert
+- [x] Assigned **Allowed locations**
+- [x] Scoped the assignment to the resource group
+- [x] Tested a prohibited region
+- [x] Confirmed policy denial
+- [x] Tested the approved region
+- [x] Confirmed successful validation
+- [x] Reviewed policy compliance
+- [x] Removed the policy assignment
+- [x] Removed the budget
+- [x] Deleted the resource group
+- [x] Confirmed final cleanup
 
 ---
 
-## Implementation
-
-### Exercise 1: Apply Cost-Tracking Tags
-
-#### 1. Prepare the environment
-
-1. Opened **Resource groups** in the Azure Portal.
-2. Created `rg-gp-cost-guardrails` in the selected Azure region.
-3. Recorded the email address to be used for budget notifications.
-
-#### 2. Create a test storage account
-
-1. Opened **Storage accounts** and selected **Create**.
-2. Selected `rg-gp-cost-guardrails` as the resource group.
-3. Entered `stgpcostguard65711345` as the storage account name.
-4. Used the same region as the resource group.
-5. Selected Azure Blob Storage or Azure Data Lake Storage as directed by the lab.
-6. Selected **Standard** performance and **Locally-redundant storage (LRS)**.
-7. Reviewed, created, and opened the deployed resource.
-
-#### 3. Tag the resource group
-
-The following tags were added to `rg-gp-cost-guardrails`:
-
-| Tag | Value |
-|---|---|
-| `environment` | `pilot` |
-| `owner` | `it-team` |
-
-**Validation:** The resource group displayed both tags after they were applied.
-
-#### 4. Tag the storage account
-
-The same `environment` and `owner` tags were applied to the storage account.
-
-**Validation:** The storage account displayed tags matching those assigned to the resource group.
-
----
-
-### Exercise 2: Create a Budget and Alerts
-
-#### 1. Open Cost Management
-
-1. Opened **Cost Management** from the Azure Portal search bar.
-2. Selected **Budgets** under Monitoring.
-3. Selected **Add** and confirmed the intended budget scope.
-
-#### 2. Configure the budget
-
-The budget was configured with the following settings:
-
-| Setting | Value |
-|---|---|
-| Name | `gp-pilot-budget` |
-| Reset period | Monthly |
-| Test amount | 10 in the applicable billing currency |
-| First alert | Actual cost at 80% |
-| Second alert | Actual cost at 100% |
-| Alert recipient | Authorized project email address |
-
-**Validation:** `gp-pilot-budget` appeared in the budget list with the two configured alert thresholds.
-
-The 80% threshold provides an earlier warning for investigation, while the 100% threshold indicates that actual cost has reached the full configured budget amount.
-
----
-
-### Exercise 3: Assign and Test Azure Policy
-
-#### 1. Assign the Allowed locations policy
-
-1. Opened **Policy** in the Azure Portal.
-2. Selected **Definitions** under Authoring.
-3. Searched for and selected **Allowed locations**.
-4. Started a new policy assignment.
-5. Scoped the assignment to `rg-gp-cost-guardrails`.
-6. Selected one Azure region as the allowed location.
-7. Reviewed and created the assignment.
-
-**Validation:** The **Allowed locations** policy appeared as an assignment scoped to the project resource group.
-
-#### 2. Test policy enforcement
-
-A temporary storage account deployment was used to test the policy:
-
-1. Selected `rg-gp-cost-guardrails` as the target resource group.
-2. Chose a region that was not included in the policy's allowed locations.
-3. Attempted validation and confirmed that the deployment was denied by policy.
-4. Returned to the configuration and changed the region to the approved location.
-5. Re-ran validation and confirmed that it passed.
-6. Created the resource in the allowed location.
-
-**Validation:** The policy denied the deployment in a disallowed region and permitted it in the configured region.
-
-#### 3. Review policy compliance
-
-1. Opened **Policy** and selected **Compliance**.
-2. Located the **Allowed locations** assignment.
-3. Opened the assignment to review its compliance details.
-4. Confirmed the enforcement status for resources deployed in the approved region.
-
-**Validation:** The compliance view displayed the status of the policy assignment and the resources evaluated within its scope.
-
----
-
-### Clean-Up and Verification
-
-Cleanup was performed in the correct dependency order.
-
-#### 1. Remove the policy assignment
-
-The **Allowed locations** assignment was deleted before the resource group to prevent the governance control from interfering with resource removal.
-
-#### 2. Delete the budget
-
-`gp-pilot-budget` was removed from Azure Cost Management.
-
-#### 3. Delete the resource group
-
-`rg-gp-cost-guardrails` was deleted. This also removed the storage accounts and test resources contained within the group.
-
-#### 4. Verify cleanup
-
-The following checks were completed:
-
-- `rg-gp-cost-guardrails` no longer appeared under Resource groups.
-- The **Allowed locations** assignment no longer appeared under Policy assignments.
-- `gp-pilot-budget` no longer appeared under Budgets.
-
----
-
-## Validation Checklist
-
-| Validation Item | Expected Result | Status |
-|---|---|---|
-| Resource group created | `rg-gp-cost-guardrails` is available | Completed |
-| Test storage account created | Storage account deployment succeeds | Completed |
-| Resource-group tags applied | `environment: pilot` and `owner: it-team` are visible | Completed |
-| Storage-account tags applied | Tags match the resource group | Completed |
-| Monthly budget created | `gp-pilot-budget` appears in the budget list | Completed |
-| Budget thresholds configured | 80% and 100% alerts are present | Completed |
-| Policy assigned | Allowed locations is scoped to the resource group | Completed |
-| Disallowed region tested | Deployment is denied by Azure Policy | Completed |
-| Allowed region tested | Validation passes and deployment is permitted | Completed |
-| Compliance reviewed | Policy status is visible in the compliance dashboard | Completed |
-| Policy assignment removed | Assignment no longer appears | Completed |
-| Budget removed | Budget no longer appears | Completed |
-| Resource group removed | Resource group no longer appears | Completed |
-
----
-
-## Suggested Screenshot Evidence
-
-If screenshot evidence is added to the repository, each image should be placed directly beneath the matching task. Use the exact visible content of each screenshot to confirm the final filename and caption.
-
-| Suggested Filename | Evidence It Should Show | Recommended Placement |
-|---|---|---|
-| `Fig01 Resource Group Created.png` | `rg-gp-cost-guardrails` successfully created | Exercise 1, Prepare the environment |
-| `Fig02 Storage Account Deployment.png` | Completed storage account deployment | Exercise 1, Create a test storage account |
-| `Fig03 Resource Group Tags.png` | Resource-group tags and their values | Exercise 1, Tag the resource group |
-| `Fig04 Storage Account Tags.png` | Matching storage-account tags | Exercise 1, Tag the storage account |
-| `Fig05 Budget Configuration.png` | Monthly budget name and amount | Exercise 2, Configure the budget |
-| `Fig06 Budget Alert Thresholds.png` | 80% and 100% actual-cost alerts | Exercise 2, Configure the budget |
-| `Fig07 Allowed Locations Assignment.png` | Policy assignment and resource-group scope | Exercise 3, Assign the policy |
-| `Fig08 Policy Denied Deployment.png` | Policy denial for the disallowed region | Exercise 3, Test policy enforcement |
-| `Fig09 Allowed Region Validation.png` | Successful validation in the permitted region | Exercise 3, Test policy enforcement |
-| `Fig10 Policy Compliance Status.png` | Compliance details for the assignment | Exercise 3, Review compliance |
-| `Fig11 Cleanup Verification.png` | Final evidence that lab resources were removed | Clean-Up and Verification |
-
-> Do not add a screenshot under a task unless the image visibly proves that task. Rename files only after confirming that the filename, Markdown link, caption, and screenshot content match exactly.
-
-Example Markdown syntax:
-
-```markdown
-![Fig01 Resource Group Created](screenshots/Fig01%20Resource%20Group%20Created.png)
-
-*Figure 1: The Azure Portal displays the successfully created project resource group.*
-```
-
----
-
-## Results
-
-The project achieved its intended governance outcomes:
-
-- Pilot resources were consistently classified for ownership and environment tracking.
-- A monthly budget was created with warning thresholds at 80% and 100%.
-- Azure Policy was assigned at the resource-group level.
-- A deployment to a disallowed region was prevented.
-- A deployment to the permitted region passed validation.
-- Policy compliance information was reviewed.
-- All project resources and governance objects were removed after testing.
-
-Together, these results demonstrate a practical governance pattern that integrates cost visibility, financial monitoring, and preventive cloud controls.
-
----
-
-## Security and Governance Considerations
-
-- **Secrets were excluded:** No passwords, access tokens, or authentication details are documented in this repository.
-- **Scope was limited:** The policy was assigned only to the project resource group, reducing the risk of unintended subscription-wide impact.
-- **Policy behavior was tested safely:** Enforcement was validated through a controlled test deployment.
-- **Cost exposure was limited:** The lab used a small test budget and LRS storage configuration.
-- **Cleanup was verified:** Governance objects and billable resources were removed after use.
-- **Resource ownership was documented:** Tags established a basic ownership and environment classification model.
-
-In a production environment, tag naming, allowed regions, budget values, recipients, exemptions, and policy scope should follow approved organizational standards and change-control processes.
-
----
-
-## Challenges and Lessons Learned
-
-### Scope selection matters
-
-Budgets and policies are effective only when applied to the intended scope. Confirming the subscription or resource-group context before creation helps prevent misplaced controls.
-
-### Tags improve visibility but require consistency
-
-A tagging model becomes useful when the same keys and approved values are applied consistently. Matching tags across the resource group and storage account supported reliable classification.
-
-### Alerts support awareness, not automatic shutdown
-
-Budget thresholds provide notification points for investigation and response. They should be paired with an operational process that defines who reviews alerts and what action should follow.
-
-### Policy provides preventive governance
-
-The policy test demonstrated the difference between guidance and enforcement. A disallowed regional deployment was actively blocked, while a compliant deployment was permitted.
-
-### Cleanup is part of successful cloud operations
-
-Removing test resources, assignments, and budgets prevents unnecessary charges and leaves the environment in a known state.
-
----
-
-## Limitations and Next Steps
-
-This guided project used a small lab scope and a basic built-in policy. A broader production implementation could include:
-
-- A formal tag taxonomy with required values
-- Azure Policy initiatives that group related controls
-- Policy exemptions with documented approval and expiration
-- Management-group or subscription-level governance design
-- Multiple budget recipients and action groups
-- Cost analysis by tag, resource group, service, or subscription
-- Automated deployment through Bicep, ARM templates, Terraform, or Azure CLI
-- Centralized reporting through Azure dashboards or workbooks
-- Azure Policy remediation for controls that support deploy-if-not-exists or modify effects
-- Periodic governance reviews and budget-threshold tuning
-
-These are recommended extensions and were not part of the completed guided-lab scope.
-
----
-
-## Repository Structure
-
-```text
-azure-cost-governance/
-|
-+-- README.md
-+-- screenshots/
-|   +-- Fig01 Resource Group Created.png
-|   +-- Fig02 Storage Account Deployment.png
-|   +-- Fig03 Resource Group Tags.png
-|   +-- Fig04 Storage Account Tags.png
-|   +-- Fig05 Budget Configuration.png
-|   +-- Fig06 Budget Alert Thresholds.png
-|   +-- Fig07 Allowed Locations Assignment.png
-|   +-- Fig08 Policy Denied Deployment.png
-|   +-- Fig09 Allowed Region Validation.png
-|   +-- Fig10 Policy Compliance Status.png
-|   +-- Fig11 Cleanup Verification.png
-+-- LICENSE
-```
-
-Only include screenshot files that are available and that clearly match their labels. Remove unused placeholders from the final repository.
-
----
-
-## Conclusion
-
-This completed project established a practical Azure cost-governance baseline using resource tags, a monthly budget, cost alerts, and Azure Policy. The lab demonstrated how financial visibility and technical enforcement can work together to improve cloud accountability.
-
-The successful policy test showed that Azure governance can prevent deployments that violate an approved regional requirement while allowing compliant resources to proceed. Final cleanup and verification completed the operational lifecycle responsibly and reduced the risk of ongoing lab charges.
-
----
-
-## Disclaimer
-
-This repository documents a completed educational lab performed in a temporary Skillable Microsoft Azure environment. Resource names, settings, and values were used for training purposes and may require modification before use in another subscription or production environment.
-
-No passwords, Temporary Access Pass tokens, authentication secrets, or private account details are included. Screenshots should be reviewed and redacted before publication to ensure that they do not expose subscription identifiers, tenant information, email addresses, access tokens, or other sensitive data.
-
-Microsoft Azure and related product names are trademarks of Microsoft Corporation. This project is an independent educational portfolio entry and does not represent an official Microsoft deployment guide.
-
----
-
-## Author
+## 👤 Author
 
 **Wadondera A. Collins**  
-ICDFA Trainee | Cohort 11  
-Cloud Security Engineering  
-Focus Areas: Microsoft Azure, Cloud Security, Governance, Identity, and DevOps
+ICDFA Trainee | Cohort 11 | Cloud Security Engineering
+
+This project forms part of my practical Azure governance and cloud-security portfolio, demonstrating cost visibility, financial monitoring, preventive policy enforcement, compliance validation, and responsible cleanup.
+
+---
+
+## 🙏 Acknowledgements
+
+This guided project was completed as part of the **Mentor Pilot Program** in a Skillable Azure environment. Mentor supported the learning experience through lab navigation, instruction comprehension, and troubleshooting.
+
+Official reference material:
+
+- [Use Azure Policy to enforce tagging conventions](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies)
+- [Manage tag governance with Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/tutorials/govern-tags)
+- [Azure Policy documentation](https://learn.microsoft.com/en-us/azure/governance/policy/)
+- [Set spending guardrails](https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/set-spending-guardrails)
+
+---
+
+## ⚖️ Disclaimer
+
+This repository documents a completed educational lab performed in a temporary Skillable Microsoft Azure environment. It is not a production-ready governance architecture and does not replace official Microsoft documentation, organizational policy, financial guidance, or professional cloud-security advice. Resource names, settings, budget values, recipients, allowed regions, and policy scope require review before reuse.
+
+Passwords, Temporary Access Pass codes, authentication secrets, subscription identifiers, tenant information, email addresses, access tokens, and private account details are intentionally excluded. Screenshots must be reviewed and redacted before publication. Azure services, interfaces, roles, pricing, limits, and features may change over time.
 
 ---
 
 <div align="center">
 
-**Completed on September 30, 2026**
+### 🎉 Lab Completed Successfully
 
-*Building secure, governed, and cost-aware cloud environments through practical implementation.*
+**Azure cost governance: tagged, monitored, enforced, validated, and responsibly removed.**
+
+Made with curiosity, care, and a commitment to secure, governed, and cost-aware cloud engineering.  
+
+**Wadondera A. Collins**  
+*ICDFA Trainee | Cohort 11 | Cloud Security Engineering*
 
 </div>
