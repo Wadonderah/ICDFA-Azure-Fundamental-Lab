@@ -4,6 +4,8 @@
 
 ### Mentor Pilot Program | Completed Assignment
 
+**Prepared by:** Wadondera A. Collins  
+**Program:** ICDFA Trainee | Cohort 11 | Cloud Security Engineering  
 **Completion Date:** September 30, 2026
 
 [![Azure](https://img.shields.io/badge/Microsoft%20Azure-Blob%20Storage-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
@@ -579,6 +581,9 @@ Passwords, access keys, connection strings, shared access signatures, subscripti
 
 **Azure static website hosting: configured, published, updated, validated, and responsibly removed.**
 
-Made with curiosity, care, and a commitment to responsible cloud engineering.
+Made with curiosity, care, and a commitment to responsible cloud engineering.  
+
+**Wadondera A. Collins**  
+*ICDFA Trainee | Cohort 11 | Cloud Security Engineering*
 
 </div>
