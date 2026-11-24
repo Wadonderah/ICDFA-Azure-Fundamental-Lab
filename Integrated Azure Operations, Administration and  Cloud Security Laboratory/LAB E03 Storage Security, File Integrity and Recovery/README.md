@@ -678,7 +678,10 @@ The known-good backup was followed by a deliberate VM state change and a confirm
 
 ---
 
-## Troubleshooting
+## Laboratory E03 Troubleshooting
+
+Use the checks below without resetting the simulator. Preserve the shared E01-E03 workspace unless the instructor explicitly requires a restart.
+
 
 ### Error: Storage account already exists
 
@@ -749,7 +752,10 @@ Confirm that `vm-demo` was running before the backup was created. Recovery retur
 
 ---
 
-## Completion Checklist
+## Laboratory E03 Completion Checklist
+
+Complete this checklist only from actual terminal evidence. A failed operation may be marked complete only when failure was the intended security control, such as a management-plane RBAC denial or restore rejection without `--confirm`.
+
 
 ### Part A: Storage security
 
