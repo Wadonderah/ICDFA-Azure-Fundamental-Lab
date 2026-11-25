@@ -1,0 +1,10 @@
+Risk ID,Asset/Process,Observed weakness,Likelihood (1-5),Impact (1-5),Risk score,Proposed control,Owner,Evidence reference,Residual risk
+R01,NSG and SSH,SSH allowed broadly from 0.0.0.0/0,5,5,25,Remove wildcard rule and retain authorized CIDR,Student,E02/Fig08,Low
+R02,Storage account,Public blob access enabled,5,5,25,Set public access to false,Student,E03/Fig03,Low
+R03,Storage account,HTTPS-only disabled,4,5,20,Set HTTPS-only to true,Student,E03/Fig03,Low
+R04,Role assignments,Excessive or incorrectly scoped permissions,4,4,16,Use group- and storage-scoped least privilege,Student,E03/Fig06,Low
+R05,VM monitoring,CPU monitoring absent or misconfigured,4,5,20,Configure and test 85 percent CPU rule,Student,E04/Fig01-Fig02,Low
+R06,Operations data,File tampering or corruption possible,3,5,15,Verify SHA-256 before and after transfer,Student,E03/Fig04-Fig07,Low
+R07,Simulator inventory,Inventory loss,3,5,15,Create and verify known-good backup,Student,E03/Fig08,Low
+R08,Local health service,Public or unintended port exposure,4,4,16,Bind to 127.0.0.1 and stop unused service,Student,E02/Fig09-Fig11,Low
+R09,GitHub repository,Secrets committed to source control,4,5,20,Ignore secrets and review staged files,Student,README and repository inspection,Low

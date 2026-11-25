@@ -1,0 +1,4 @@
+CCSE-102 operations evidence
+Student: Wadondera A. Collins
+Purpose: Local storage integrity validation
+Classification: Training data only

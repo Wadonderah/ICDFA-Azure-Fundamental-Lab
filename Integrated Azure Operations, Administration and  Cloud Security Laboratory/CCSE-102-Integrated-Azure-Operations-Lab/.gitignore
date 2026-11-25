@@ -1,0 +1,7 @@
+workspace/
+.env
+*.pem
+*.key
+id_rsa*
+__pycache__/
+*.pyc

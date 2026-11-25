@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-11-25T09:41:09+00:00",
+  "course": "CCSE-102",
+  "notice": "This report concerns local simulated Azure-style resources only.",
+  "groups": 1,
+  "vms": {
+    "vm-demo": {
+      "created_at": "2026-11-24T08:52:50+00:00",
+      "group": "rg-icdfa-lab",
+      "os": "Ubuntu (simulated record)",
+      "size": "B1s",
+      "state": "running"
+    }
+  },
+  "nsgs": {
+    "nsg-demo": {
+      "default": "deny",
+      "group": "rg-icdfa-lab",
+      "rules": [
+        {
+          "decision": "allow",
+          "port": 22,
+          "priority": 100,
+          "source": "192.168.56.0/24"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "sticdfalab": {
+      "group": "rg-icdfa-lab",
+      "blob_count": 1
+    }
+  },
+  "access_assignments": [
+    {
+      "role": "Owner",
+      "scope": "subscription",
+      "user": "student-admin"
+    },
+    {
+      "role": "Reader",
+      "scope": "subscription",
+      "user": "auditor"
+    },
+    {
+      "role": "Reader",
+      "scope": "group:rg-icdfa-lab",
+      "user": "analyst"
+    },
+    {
+      "role": "Storage Blob Data Contributor",
+      "scope": "storage:sticdfalab",
+      "user": "blob-operator"
+    }
+  ],
+  "alerts_defined": {
+    "high-cpu": {
+      "enabled": true,
+      "metric": "cpu_percent",
+      "threshold": 85
+    }
+  }
+}
